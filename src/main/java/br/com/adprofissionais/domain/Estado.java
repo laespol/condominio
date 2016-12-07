@@ -1,0 +1,31 @@
+package br.com.adprofissionais.domain;
+
+public class Estado {
+	
+	private String codigo;
+	private String descricao;
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	@Override
+	public String toString() {
+		String saida = codigo + " " + descricao;
+		return saida;
+	}
+
+
+}

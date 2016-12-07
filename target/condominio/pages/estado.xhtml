@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmEstListagem">
+			<p:dataTable id="tblEstados" widgetVar="tabelaEstados"
+				emptyMessage="Nenhum Estado Encontrado."
+				value="#{MBEstado.itens}" var="item"
+				filteredValue="#{MBEstado.itensFiltrados}" paginator="true"
+				rows="10" editable="true">
+
+				<f:facet name="header">
+					Estados - Listagem
+				</f:facet>
+
+				<p:column headerText="Código" sortBy="#{item.codigo}"
+					filterBy="#{item.codigo}" style="text-align:center">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+
+				<p:column headerText="Descrição" sortBy="#{item.descricao}"
+					filterBy="#{item.descricao}">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgEstExcluir').show();"
+						update=":frmEstExcluir:pnlEstExcluir :msgGlobal">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBEstado.estado}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgEstEditar').show();"
+						update=":frmEstEditar:pnlEstEditar :msgGlobal">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBEstado.estado}" />
+					</p:commandButton>
+
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton value="Novo"
+						actionListener="#{MBEstado.prepararNovo}"
+						oncomplete="PF('dlgEstNovo').show();"
+						update=":frmEstNovo:pnlEstNovo :msgGlobal" />
+				</f:facet>
+
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog widgetVar="dlgEstNovo" closable="false" draggable="false"
+			resizable="flase" header="Estado - Novo" modal="true"
+			appendTo="@(body)">
+			
+			<h:form id="frmEstNovo">
+			
+				<h:panelGrid id="pnlEstNovo" columns="2">
+									<p:outputLabel for="txtCodEstNovo" value="Sigla " style="font-weight:bold" />
+					<p:inputText id="txtCodEstNovo" size="30" maxlength="50"
+						value="#{MBEstado.estado.codigo}" required="true"
+						requiredMessage="O Campo Sigla é Obrigatório" />
+					<p:outputLabel for="txtDescEstNovo" value="Descrição " style="font-weight:bold" />
+					<p:inputText id="txtDescEstNovo" size="30" maxlength="50"
+						value="#{MBEstado.estado.descricao}" required="true"
+						requiredMessage="O Campo Descrição é Obrigatório" />
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gravar"
+						actionListener="#{MBEstado.novo}"
+						oncomplete="verificar(xhr, status, args,'dlgEstNovo','tabelaEstados');"
+						update=":frmEstListagem:tblEstados :msgGlobal" />
+					<p:commandButton value="Sair" process="@this"   onclick="PF('dlgEstNovo').hide();" >
+						<p:resetInput target="pnlEstNovo" />
+					</p:commandButton>
+				</h:panelGrid>
+				
+			</h:form>
+			
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgEstExcluir" closable="false" draggable="false"
+			resizable="flase" header="Estado - Exluir" modal="true"
+			appendTo="@(body)">
+
+			<h:form id="frmEstExcluir">
+				<h:panelGrid id="pnlEstExcluir" columns="2">
+
+					<h:outputLabel value="Código : " />
+					<h:outputText value="#{MBEstado.estado.codigo}" />
+
+					<h:outputLabel value="Descrição : " />
+					<h:outputText value="#{MBEstado.estado.descricao}" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBEstado.excluir}"
+						oncomplete="verificar(xhr, status, args,'dlgEstExcluir','tabelaEstados');"
+						update=":frmEstListagem:tblEstados :msgGlobal" />
+					<p:commandButton value="Sair" process="@this"
+						onclick="PF('dlgEstExcluir').hide(); " />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgEstEditar" closable="false" draggable="false"
+			resizable="flase" header="Estado - Editar" modal="true"
+			appendTo="@(body)">
+
+			<h:form id="frmEstEditar">
+				<h:panelGrid id="pnlEstEditar" columns="2">
+
+					<h:outputLabel value="Código " />
+					<h:outputText value="#{MBEstado.estado.codigo}" />
+
+					<p:outputLabel for="txtDescEstEditar" value="Descrição" style="font-weight:bold" />
+					<p:inputText   id= "txtDescEstEditar" value="#{MBEstado.estado.descricao}" size="30"
+						maxlength="50" required="true" requiredMessage="Campo Descrição é Obrigatorio" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBEstado.editar}"
+						oncomplete="verificar(xhr, status, args,'dlgEstEditar','tabelaEstados');"
+						update=":frmEstListagem:tblEstados :msgGlobal" />
+					<p:commandButton value="Sair" process="@this" onclick="PF('dlgEstEditar').hide(); " >
+					<p:resetInput target="pnlEstEditar"></p:resetInput>
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

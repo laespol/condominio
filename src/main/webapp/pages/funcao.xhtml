@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmFunListagem">
+			<p:dataTable id="tblFuncaos" widgetVar="tabelaFuncaos"
+				emptyMessage="Nenhum Funcao Encontrado." value="#{MBFuncao.itens}"
+				var="item" filteredValue="#{MBFuncao.itensFiltrados}"
+				paginator="true" rows="10" editable="true">
+
+				<f:facet name="header">
+					Funcao - Listagem
+				</f:facet>
+
+				<p:column headerText="Código" sortBy="#{item.codigo}"
+					filterBy="#{item.codigo}" style="text-align:center">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+
+				<p:column headerText="Descrição" sortBy="#{item.descricao}"
+					filterBy="#{item.descricao}">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+
+				<p:column headerText="Tipo" sortBy="#{item.tipo}"
+					filterBy="#{item.tipo}">
+					<h:outputText value="#{item.tipo}" />
+				</p:column>
+				<p:column headerText="Opções">
+
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgFunExcluir').show();"
+						update=":frmFunExcluir:pnlFunExcluir :msgGlobal">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBFuncao.funcao}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgFunEditar').show();"
+						update=":frmFunEditar:pnlFunEditar :msgGlobal">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBFuncao.funcao}" />
+					</p:commandButton>
+
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton value="Novo"
+						actionListener="#{MBFuncao.prepararNovo}"
+						oncomplete="PF('dlgFunNovo').show();"
+						update=":frmFunNovo:pnlFunNovo :msgGlobal" />
+				</f:facet>
+
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog widgetVar="dlgFunNovo" closable="false" draggable="false"
+			resizable="flase" header="Funcao - Novo" modal="true"
+			appendTo="@(body)">
+
+			<h:form id="frmFunNovo">
+
+				<h:panelGrid id="pnlFunNovo" columns="2">
+				
+					<p:outputLabel for="txtDescFunNovo" value="Descrição " style="font-weight:bold"/>
+					<p:inputText id="txtDescFunNovo" size="30" maxlength="50"
+						value="#{MBFuncao.funcao.descricao}" required="true"
+						requiredMessage="O Campo Descrição é Obrigatório" />
+						
+					<p:outputLabel for="txtTipoFunNovo" value="Tipo " style="font-weight:bold"/>
+					<p:inputText id="txtTipoFunNovo" size="3" maxlength="2"
+						value="#{MBFuncao.funcao.tipo}" required="true"
+						requiredMessage="O Campo Tipo é Obrigatório" />
+						
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gravar" actionListener="#{MBFuncao.novo}"
+						oncomplete="verificar(xhr, status, args,'dlgFunNovo','tabelaFuncaos');"
+						update=":frmFunListagem:tblFuncaos :msgGlobal" />
+					<p:commandButton value="Sair" process="@this"
+						onclick="PF('dlgFunNovo').hide();">
+						<p:resetInput target="pnlFunNovo" />
+					</p:commandButton>
+				</h:panelGrid>
+
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgFunExcluir" closable="false" draggable="false"
+			resizable="flase" header="Funcao - Exluir" modal="true"
+			appendTo="@(body)">
+
+			<h:form id="frmFunExcluir">
+				<h:panelGrid id="pnlFunExcluir" columns="2">
+
+					<h:outputLabel value="Código  " />
+					<h:outputText value="#{MBFuncao.funcao.codigo}" />
+
+					<h:outputLabel value="Descrição  " />
+					<h:outputText value="#{MBFuncao.funcao.descricao}" />
+					
+					<h:outputLabel value="Tipo  " />
+					<h:outputText value="#{MBFuncao.funcao.tipo}" />
+					
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBFuncao.excluir}"
+						oncomplete="verificar(xhr, status, args,'dlgFunExcluir','tabelaFuncaos');"
+						update=":frmFunListagem:tblFuncaos :msgGlobal" />
+					<p:commandButton value="Sair" process="@this"
+						onclick="PF('dlgFunExcluir').hide(); " />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgFunEditar" closable="false" draggable="false"
+			resizable="flase" header="Funcao - Editar" modal="true"
+			appendTo="@(body)">
+
+			<h:form id="frmFunEditar">
+				<h:panelGrid id="pnlFunEditar" columns="2">
+
+					<h:outputLabel value="Código " />
+					<h:outputText value="#{MBFuncao.funcao.codigo}" />
+
+					<p:outputLabel for="txtDescFunEditar" value="Descrição" style="font-weight:bold"/>
+					<p:inputText id="txtDescFunEditar"
+						value="#{MBFuncao.funcao.descricao}" size="30" maxlength="50"
+						required="true" requiredMessage="Campo Descrição é Obrigatorio" />
+
+					<p:outputLabel for="txtTipoFunEditar" value="Descrição" style="font-weight:bold" />
+					<p:inputText id="txtTipoFunEditar"
+						value="#{MBFuncao.funcao.tipo}" size="30" maxlength="50"
+						required="true" requiredMessage="Campo Tipo é Obrigatorio" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar" actionListener="#{MBFuncao.editar}"
+						oncomplete="verificar(xhr, status, args,'dlgFunEditar','tabelaFuncaos');"
+						update=":frmFunListagem:tblFuncaos :msgGlobal" />
+					<p:commandButton value="Sair" process="@this"
+						onclick="PF('dlgFunEditar').hide(); ">
+						<p:resetInput target="pnlFunEditar"></p:resetInput>
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

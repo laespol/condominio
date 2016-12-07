@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmTpCListagem">
+			<p:dataTable id="tblTipoContatos" widgetVar="tabelaTipoContatos"
+				emptyMessage="Nenhum TipoContato Encontrado."
+				value="#{MBTipoContato.itens}" var="item"
+				filteredValue="#{MBTipoContato.itensFiltrados}" paginator="true"
+				rows="10" editable="true">
+
+				<f:facet name="header">
+					TipoContatos - Listagem
+				</f:facet>
+
+				<p:column headerText="Código" sortBy="#{item.codigo}"
+					filterBy="#{item.codigo}" style="text-align:center">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+
+				<p:column headerText="Descrição" sortBy="#{item.descricao}"
+					filterBy="#{item.descricao}">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgTpCExcluir').show();"
+						update=":frmTpCExcluir:pnlTpCExcluir :msgGlobal">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBTipoContato.tipocontato}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgTpCEditar').show();"
+						update=":frmTpCEditar:pnlTpCEditar :msgGlobal">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBTipoContato.tipocontato}" />
+					</p:commandButton>
+
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton value="Novo"
+						actionListener="#{MBTipoContato.prepararNovo}"
+						oncomplete="PF('dlgTpCNovo').show();"
+						update=":frmTpCNovo:pnlTpCNovo :msgGlobal" />
+				</f:facet>
+
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog widgetVar="dlgTpCNovo" closable="false" draggable="false"
+			resizable="flase" header="TipoContato - Novo" modal="true"
+			appendTo="@(body)">
+			
+			<h:form id="frmTpCNovo">
+			
+				<h:panelGrid id="pnlTpCNovo" columns="2">
+					<p:outputLabel for="txtDescTpCNovo" value="Descrição " style="font-weight:bold" />
+					<p:inputText id="txtDescTpCNovo" size="30" maxlength="50"
+						value="#{MBTipoContato.tipocontato.descricao}" required="true"
+						requiredMessage="O Campo Descrição é Obrigatório" />
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gravar"
+						actionListener="#{MBTipoContato.novo}"
+						oncomplete="verificar(xhr, status, args,'dlgTpCNovo','tabelaTipoContatos');"
+						update=":frmTpCListagem:tblTipoContatos :msgGlobal" />
+					<p:commandButton value="Sair" process="@this"   onclick="PF('dlgTpCNovo').hide();" >
+						<p:resetInput target="pnlTpCNovo" />
+					</p:commandButton>
+				</h:panelGrid>
+				
+			</h:form>
+			
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgTpCExcluir" closable="false" draggable="false"
+			resizable="flase" header="TipoContato - Exluir" modal="true"
+			appendTo="@(body)">
+
+			<h:form id="frmTpCExcluir">
+				<h:panelGrid id="pnlTpCExcluir" columns="2">
+
+					<h:outputLabel value="Código : " />
+					<h:outputText value="#{MBTipoContato.tipocontato.codigo}" />
+
+					<h:outputLabel value="Descrição : " />
+					<h:outputText value="#{MBTipoContato.tipocontato.descricao}" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBTipoContato.excluir}"
+						oncomplete="verificar(xhr, status, args,'dlgTpCExcluir','tabelaTipoContatos');"
+						update=":frmTpCListagem:tblTipoContatos :msgGlobal" />
+					<p:commandButton value="Sair" process="@this"
+						onclick="PF('dlgTpCExcluir').hide(); " />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgTpCEditar" closable="false" draggable="false"
+			resizable="flase" header="TipoContato - Editar" modal="true"
+			appendTo="@(body)">
+
+			<h:form id="frmTpCEditar">
+				<h:panelGrid id="pnlTpCEditar" columns="2">
+
+					<h:outputLabel value="Código " />
+					<h:outputText value="#{MBTipoContato.tipocontato.codigo}" />
+
+					<p:outputLabel for="txtDescTpCEditar" value="Descrição" style="font-weight:bold" />
+					<p:inputText   id= "txtDescTpCEditar" value="#{MBTipoContato.tipocontato.descricao}" size="30"
+						maxlength="50" required="true" requiredMessage="Campo Descrição é Obrigatorio" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBTipoContato.editar}"
+						oncomplete="verificar(xhr, status, args,'dlgTpCEditar','tabelaTipoContatos');"
+						update=":frmTpCListagem:tblTipoContatos :msgGlobal" />
+					<p:commandButton value="Sair" process="@this" onclick="PF('dlgTpCEditar').hide(); " >
+					<p:resetInput target="pnlTpCEditar"></p:resetInput>
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmCotListagem">
+			<p:dataTable id="tblContatos" widgetVar="tabelaContatos"
+				emptyMessage="Nenhum Contato Encontrado." value="#{MBContato.itens}"
+				var="item" filteredValue="#{MBContato.itensFiltrados}"
+				paginator="true" rows="10" editable="true">
+
+				<f:facet name="header">
+					Contato - Listagem
+				</f:facet>
+				<p:column style="width:16px">
+					<p:rowToggler />
+				</p:column>
+
+				<p:column headerText="Cód." sortBy="#{item.codigo}"
+					filterBy="#{item.codigo}" style="text-align:center">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+				<p:column headerText="condominio"
+					sortBy="#{item.condominio.descricao}"
+					filterBy="#{item.condominio.descricao}" style="text-align:center">
+					<h:outputText value="#{item.condominio.descricao}" />
+				</p:column>
+
+				<p:column headerText="usuario" sortBy="#{item.responsavel.email}"
+					filterBy="#{item.responsavel.email}" style="text-align:center">
+					<h:outputText value="#{item.responsavel.email}" />
+				</p:column>
+
+				<p:column headerText="usuario"
+					sortBy="#{item.responsavel.usuario.nome}"
+					filterBy="#{item.responsavel.usuario.nome}"
+					style="text-align:center">
+					<h:outputText value="#{item.responsavel.usuario.nome}" />
+				</p:column>
+
+				<p:column headerText="usuario"
+					sortBy="#{item.responsavel.usuario.codigo}"
+					filterBy="#{item.responsavel.usuario.codigo}"
+					style="text-align:center">
+					<h:outputText value="#{item.responsavel.usuario.codigo}" />
+				</p:column>
+
+				<p:column headerText="usuario" sortBy="#{item.data}"
+					filterBy="#{item.data}" style="text-align:center">
+					<h:outputText value="#{item.data}" pattern="dd/MM/yyyy" />
+				</p:column>
+
+				<p:column headerText="Tipo Contato"
+					sortBy="#{item.tipocontato.descricao}"
+					filterBy="#{item.tipocontato.descricao}" style="text-align:center">
+					<h:outputText value="#{item.tipocontato.descricao}" />
+				</p:column>
+
+				<p:column headerText="Descrição" sortBy="#{item.descricao}"
+					filterBy="#{item.descricao}">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+
+
+				<p:column headerText="Opções">
+
+					<p:commandButton icon="ui-icon-trash"
+						oncomplete="PF('dlgCotExcluir').show();"
+						update=":frmCotExcluir:pnlCotExcluir :msgGlobal">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBContato.contato}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgCotEditar').show();"
+						update=":frmCotEditar:pnlCotEditar :msgGlobal"
+						actionListener="#{MBContato.prepararEditar}">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{MBContato.contato}" />
+					</p:commandButton>
+
+				</p:column>
+				<p:rowExpansion>
+					<p:panelGrid columns="2" columnClasses="label,value"
+						style="width:500px">
+
+						<h:outputText value="Endereço " />
+						<h:outputText value="#{item.condominio.endereco}" />
+						<h:outputText value="Bairro" />
+						<h:outputText value="#{item.condominio.bairro}" />
+						<h:outputText value="Cidade " />
+						<h:outputText value="#{item.condominio.cidade}" />
+						<h:outputText value="UF " />
+						<h:outputText value="#{item.condominio.estado.descricao}" />
+						<h:outputText value="CEP" />
+						<h:outputText value="#{item.condominio.cep}" />
+
+
+					</p:panelGrid>
+
+				</p:rowExpansion>
+
+				<f:facet name="footer">
+					<p:commandButton value="Novo"
+						actionListener="#{MBContato.prepararNovo}"
+						oncomplete="PF('dlgCotNovo').show();"
+						update=":frmCotNovo:pnlCotNovo :msgGlobal" />
+				</f:facet>
+
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog widgetVar="dlgCotNovo" closable="false" draggable="false"
+			resizable="flase" header="Contato - Novo" modal="true"
+			appendTo="@(body)">
+
+			<h:form id="frmCotNovo">
+
+				<h:panelGrid id="pnlCotNovo" columns="2" cellpadding="5">
+
+					<p:outputLabel for="txtDatCotNovo" value="Data do Contato "
+						style="font-weight:bold" />
+					<p:calendar value="#{MBContato.contato.data}" size="8" locale="pt"
+						id="txtDatCotNovo" required="true" label="Data"
+						pattern="dd/MM/yyyy" mindate="#{MBContato.dataAtual}"
+						showOn="button">
+					</p:calendar>
+
+
+					<p:outputLabel for="cbConCoTNovo" value="Condominio "
+						style="font-weight:bold" />
+					<p:selectOneMenu id="cbConCoTNovo"
+						value="#{MBContato.contato.condominio.codigo}" filter="true"
+						required="true" requiredMessage="Selecionar um Condominio">
+						<f:selectItem itemValue="" itemLabel="Selecione um Condominio" />
+						<f:selectItems value="#{MBContato.comboCondominios}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="cbResCoTNovo" value="Usuario "
+						style="font-weight:bold" />
+					<p:selectOneMenu id="cbResCoTNovo"
+						value="#{MBContato.contato.responsavel.codigo}" filter="true"
+						required="true" requiredMessage="Selecionar um Usuario">
+						<f:selectItem itemValue="" itemLabel="Selecione um usuario" />
+						<f:selectItems value="#{MBContato.comboResponsavels}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.usuario.nome}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="cbTpCCoTNovo" value="Tipo Atendimento "
+						style="font-weight:bold" />
+					<p:selectOneMenu id="cbTpCCoTNovo"
+						value="#{MBContato.contato.tipocontato.codigo}" filter="true"
+						required="true" requiredMessage="Selecionar um Tipo de Contato">
+						<f:selectItem itemValue=""
+							itemLabel="Selecione um Tipo de Contato" />
+						<f:selectItems value="#{MBContato.comboTipoContatos}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="txtNomCotNovo" value="Nome do Contato "
+						style="font-weight:bold" />
+					<p:inputTextarea id="txtNomCotNovo" rows="4" cols="50"
+						value="#{MBContato.contato.descricao}"
+						requiredMessage="O Campo Nonme é Obrigatório"
+						label="txtNomCotNovo" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gravar" actionListener="#{MBContato.novo}"
+						oncomplete="verificar(xhr, status, args,'dlgCotNovo','tabelaContatos');"
+						update=":frmCotListagem:tblContatos :msgGlobal" />
+					<p:commandButton value="Sair" process="@this"
+						onclick="PF('dlgCotNovo').hide();">
+						<p:resetInput target="pnlCotNovo" />
+					</p:commandButton>
+				</h:panelGrid>
+
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgCotExcluir" closable="false" draggable="false"
+			resizable="flase" header="Contato - Exluir" modal="true"
+			appendTo="@(body)">
+
+			<h:form id="frmCotExcluir">
+				<h:panelGrid id="pnlCotExcluir" columns="2">
+
+					<h:outputLabel value="Código  " />
+					<h:outputText value="#{MBContato.contato.codigo}" />
+
+					<h:outputLabel value="Descrição  " />
+					<h:outputText value="#{MBContato.contato.descricao}" />
+
+					<h:outputLabel value="Descrição  " />
+					<h:outputText value="#{MBContato.contato.responsavel.usuario.nome}" />
+
+					<h:outputLabel value="Email  " />
+					<h:outputText value="#{MBContato.contato.responsavel.email}" />
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Excluir"
+						actionListener="#{MBContato.excluir}"
+						oncomplete="verificar(xhr, status, args,'dlgCotExcluir','tabelaContatos');"
+						update=":frmCotListagem:tblContatos :msgGlobal" />
+					<p:commandButton value="Sair" process="@this"
+						onclick="PF('dlgCotExcluir').hide(); " />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgCotEditar" closable="false" draggable="false"
+			resizable="flase" header="Contato - Editar" modal="true"
+			appendTo="@(body)">
+
+			<h:form id="frmCotEditar">
+				<h:panelGrid id="pnlCotEditar" columns="2">
+
+					<p:outputLabel value="Código " />
+					<h:outputText value="#{MBContato.contato.codigo}" />
+
+					<p:outputLabel for="txtDescCotEditar" value="Nome Contato"
+						style="font-weight:bold" />
+					<p:inputTextarea id="txtDescCotEditar" size="50" maxlength="50" cols="50" rows="4"
+						value="#{MBContato.contato.descricao}" required="true"
+						requiredMessage="O Campo Descrição é Obrigatório"
+						label="txtDescCotNovo" />
+
+					<p:outputLabel for="cbTpCCoTEdit" value="Tipo Atendimento "
+						style="font-weight:bold" />
+					<p:selectOneMenu id="cbTpCCoTEdit"
+						value="#{MBContato.contato.tipocontato.codigo}" filter="true"
+						required="true" requiredMessage="Selecionar um Tipo de Contato">
+						<f:selectItem itemValue=""
+							itemLabel="Selecione um Tipo de Contato" />
+						<f:selectItems value="#{MBContato.comboTipoContatos}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="cbConCoTEdit" value="Condominio "
+						style="font-weight:bold" />
+					<p:selectOneMenu id="cbConCoTEdit"
+						value="#{MBContato.contato.condominio.codigo}" filter="true"
+						required="true" requiredMessage="Selecionar um Condominio">
+						<f:selectItem itemValue="" itemLabel="Selecione um Condominio" />
+						<f:selectItems value="#{MBContato.comboCondominios}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="cbResCoTNovo" value="Usuario "
+						style="font-weight:bold" />
+					<p:selectOneMenu id="cbResCoTNovo"
+						value="#{MBContato.contato.responsavel.codigo}" filter="true"
+						required="true" requiredMessage="Selecionar um Usuario">
+						<f:selectItem itemValue="" itemLabel="Selecione um usuario" />
+						<f:selectItems value="#{MBContato.comboResponsavels}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.usuario.nome}" />
+					</p:selectOneMenu>
+
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar"
+						actionListener="#{MBContato.editar}"
+						oncomplete="verificar(xhr, status, args,'dlgCotEditar','tabelaContatos');"
+						update=":frmCotListagem:tblContatos :msgGlobal" />
+					<p:commandButton value="Sair" process="@this"
+						onclick="PF('dlgCotEditar').hide(); ">
+						<p:resetInput target="pnlCotEditar"></p:resetInput>
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

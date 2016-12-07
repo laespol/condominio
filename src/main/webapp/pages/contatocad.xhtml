@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmEstCad">
+				<h:panelGrid id="pnlCotNovo" columns="2" cellpadding="5">
+
+					<p:outputLabel for="txtDatCotNovo" value="Data do Contato "
+						style="font-weight:bold" />
+					<p:calendar value="#{MBContatoCad.contato.data}" size="8" locale="pt"
+						id="txtDatCotNovo" required="true" label="Data"
+						pattern="dd/MM/yyyy" mindate="#{MBContatoCad.dataAtual}"
+						showOn="button">
+					</p:calendar>
+
+
+					<p:outputLabel for="cbConCoTNovo" value="Condominio "
+						style="font-weight:bold" />
+					<p:selectOneMenu id="cbConCoTNovo"
+						value="#{MBContatoCad.contato.condominio.codigo}" filter="true"
+						required="true" requiredMessage="Selecionar um Condominio">
+						<f:selectItem itemValue="" itemLabel="Selecione um Condominio" />
+						<f:selectItems value="#{MBContatoCad.comboCondominios}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="cbResCoTNovo" value="Usuario "
+						style="font-weight:bold" />
+					<p:selectOneMenu id="cbResCoTNovo"
+						value="#{MBContatoCad.contato.responsavel.codigo}" filter="true"
+						required="true" requiredMessage="Selecionar um Usuario">
+						<f:selectItem itemValue="" itemLabel="Selecione um usuario" />
+						<f:selectItems value="#{MBContatoCad.comboResponsavels}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.usuario.nome}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="cbTpCCoTNovo" value="Tipo Atendimento "
+						style="font-weight:bold" />
+					<p:selectOneMenu id="cbTpCCoTNovo"
+						value="#{MBContatoCad.contato.tipocontato.codigo}" filter="true"
+						required="true" requiredMessage="Selecionar um Tipo de Contato">
+						<f:selectItem itemValue=""
+							itemLabel="Selecione um Tipo de Contato" />
+						<f:selectItems value="#{MBContatoCad.comboTipoContatos}" var="item"
+							itemValue="#{item.codigo}" itemLabel="#{item.descricao}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="txtNomCotNovo" value="Nome do Contato "
+						style="font-weight:bold" />
+					<p:inputTextarea id="txtNomCotNovo" rows="4" cols="50"
+						value="#{MBContatoCad.contato.descricao}"
+						requiredMessage="O Campo Nonme é Obrigatório"
+						label="txtNomCotNovo" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Gravar" actionListener="#{MBContatoCad.novo}"
+						update=" :msgGlobal" />
+					<p:commandButton value="Sair" process="@this"
+						onclick="PF('dlgCotNovo').hide();">
+						<p:resetInput target="pnlCotNovo" />
+					</p:commandButton>
+				</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
