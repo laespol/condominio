@@ -32,8 +32,6 @@ public class ContatoBean {
 	
 	private Date dataAtual = new Date();
 	
-	
-	
 	public Date getDataAtual() {
 		return dataAtual;
 	}
