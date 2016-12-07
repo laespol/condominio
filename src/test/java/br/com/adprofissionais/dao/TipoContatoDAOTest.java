@@ -21,7 +21,6 @@ public class TipoContatoDAOTest {
 		
 		try {
 			dao.salvar(t);
-			fail("erro na gravação");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

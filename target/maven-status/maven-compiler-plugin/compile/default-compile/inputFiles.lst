@@ -4,6 +4,7 @@
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/domain/Condominio.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/domain/Responsavel.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/bean/UsuarioBean.java
+/home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/bean/CondominioCadBean.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/domain/TipoContato.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/dao/ResponsavelDAO.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/bean/ContatoBean.java

@@ -10,6 +10,7 @@ br/com/adprofissionais/bean/UsuarioBean.class
 br/com/adprofissionais/bean/CondominioBean.class
 br/com/adprofissionais/dao/EstadoDAO.class
 br/com/adprofissionais/dao/ContatoDAO.class
+br/com/adprofissionais/bean/CondominioCadBean.class
 br/com/adprofissionais/bean/ContatoBean.class
 br/com/adprofissionais/bean/EstadoCadBean.class
 br/com/adprofissionais/bean/FuncaoBean.class
