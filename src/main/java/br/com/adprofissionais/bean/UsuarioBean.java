@@ -209,7 +209,7 @@ public class UsuarioBean {
 		}
 
     }
-    
+
     public String logout() {
         HttpSession session = Util.getSession();
         session.invalidate();
