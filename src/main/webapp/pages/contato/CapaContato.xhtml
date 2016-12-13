@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:panelGrid id="pnlFormCotNovo" columns="4"
+		style="width:100%; margin-top: 10px"
+		columnClasses="rotulo, campo, rotulo, campo">
+
+		<p:outputLabel value="Condominio" for="txtConDesCtd" />
+		<p:autoComplete id="txtConDesCtd" value="#{MBCondominio.selected}" size="45" dropdown="true"
+			required="true" completeMethod="${MBCondominio.completeCondominio()}"  converter="condominioConverter" 
+			var="condominio" itemLabel="#{condominio.descricao}" itemValue="#{condominio.codigo}" forceSelection="true"/>
+			
+		<p:outputLabel value="Endereço" for="txtConEndCtd" />
+		<p:inputText id="txtConEndCtd" size="45" maxlength="45" />
+
+		<p:outputLabel value="Bairro" for="txtConBaiCtd" />
+		<p:inputText id="txtConBaiCtd" size="45" maxlength="45" />
+
+
+		<p:outputLabel value="Cidade" for="txtConCidCtd" />
+		<p:inputText id="txtConCidCtd" size="45" maxlength="45" />
+
+		<p:outputLabel value="CEP" for="txtConCepCtd" />
+		<p:inputMask id="txtConCepCtd" size="15" maxlength="15"
+			mask="99999-999" />
+
+		<p:outputLabel for="cbConestCtb" value="Estado "
+			style="font-weight:bold" />
+		<p:selectOneMenu id="cbConestCtb" filter="true"
+			requiredMessage="Selecionar um Estado">
+			<f:selectItem itemValue="" itemLabel="Selecione um Estado" />
+		</p:selectOneMenu>
+
+		<p:outputLabel for="txtConTfxCtd" value="Telefone Fixo " />
+		<p:inputMask id="txtConTfxCtd" size="15" maxlength="15"
+			requiredMessage="O Campo Telefone Fixo é Obrigatório"
+			mask="(99) 9999-9999" />
+
+		<p:outputLabel for="txtConTclCtd" value="Telefone Celular " />
+		<p:inputMask id="txtConTclCtd" size="15" maxlength="15"
+			requiredMessage="O Campo Telefone Fixo é Obrigatório"
+			mask="(99) 99999-9999" />
+
+		<p:outputLabel for="txtConEmaCtd" value="email " />
+		<p:inputText id="txtConEmaCtd" size="45" maxlength="45"
+			requiredMessage="O Campo E-mail é Obrigatório"
+			validatorMessage="E-mail Incorreto">
+			<f:validateRegex
+				pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+		</p:inputText>
+
+
+	</p:panelGrid>
+
+</ui:composition>

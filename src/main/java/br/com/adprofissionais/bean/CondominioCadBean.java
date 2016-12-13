@@ -11,7 +11,7 @@ import br.com.adprofissionais.dao.EstadoDAO;
 import br.com.adprofissionais.domain.Estado;
 import br.com.adprofissionais.util.JSFUtil;
 
-@ManagedBean(name = "MBEstadoCad")
+@ManagedBean(name = "MBCondominioCad")
 @ViewScoped
 public class CondominioCadBean {
 

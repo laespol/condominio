@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmEstCad">
+			<p:panelGrid columns="2" cellpadding="5">
+
+				<p:outputLabel value="Sigla" for="txtCodEstNovo" />
+				<p:autoComplete id="txtCodEstNovo"
+					value="#{MBEstadoCad.estado.codigo}"
+					completeMethod="#{MBEstadoCad.completeTextCodigo}" required="true"
+					requiredMessage="O Campo Sigla do estado é Obrigatório" size="5"
+					maxlength="2" onkeyup="maiuscula(this);" />
+				<p:outputLabel value="Estado" for="txtDescEstNovo" />
+				<p:autoComplete id="txtDescEstNovo"
+					value="#{MBEstadoCad.estado.descricao}" size="45" maxlength="45"
+					completeMethod="#{MBEstadoCad.completeText}" required="true"
+					requiredMessage="O Campo descrição do estado é Obrigatório"
+					onkeyup="maiuscula(this);" />
+
+
+				<div class="knob-container  ui-corner-all">
+					<p:knob max="1000" step="50" value="900" />
+				</div>
+				<div class="knob-container  ui-corner-all">
+					<p:chart type="pie" model="#{MBEstadoCad.pieModel2}"
+						style="width:400px;height:300px" />
+				</div>
+				<div class="knob-container  ui-corner-all">
+					<p:chart type="bar" model="#{MBEstadoCad.combinedModel}"
+						style="height:300px" responsive="true" />
+				</div>
+			</p:panelGrid>
+
+			<p:panelGrid columns="4">
+				<p:commandButton value="Gravar" actionListener="#{MBEstadoCad.novo}"
+					oncomplete="verificar(xhr, status, args,'dlgEstNovo','tabelaEstados'); "
+					update=":msgGlobal" />
+				<p:commandButton value="Sair" process="@this"
+					onclick="PF('dlgEstNovo').hide();">
+					<p:resetInput target="pnlEstNovo" />
+				</p:commandButton>
+				<p:commandButton value="Pesquisa"
+					actionListener="#{MBEstadoCad.prepararPesquisa}"
+					oncomplete="verificar(xhr, status, args,'dlgEstNovo','tabelaEstados'); "
+					update=":msgGlobal" />
+			</p:panelGrid>
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

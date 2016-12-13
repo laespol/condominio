@@ -32,8 +32,6 @@ public class ContatoCadBean {
 	
 	private Date dataAtual = new Date();
 	
-	
-	
 	public Date getDataAtual() {
 		return dataAtual;
 	}
@@ -105,6 +103,8 @@ public class ContatoCadBean {
 
 	@PostConstruct
 	public void prepararNovo() {
+		
+		itens.add(1,contato);
 		
 		contato = new Contato();
 		

@@ -1,10 +1,13 @@
 br/com/adprofissionais/bean/TipoContatoBean.class
 br/com/adprofissionais/dao/TipoContatoDAO.class
 br/com/adprofissionais/bean/ResponsavelBean.class
+br/com/adprofissionais/converter/CondominioConverter.class
 br/com/adprofissionais/util/JSFUtil.class
 br/com/adprofissionais/factory/ConexaoFactory.class
 br/com/adprofissionais/domain/TipoContato.class
+br/com/adprofissionais/dao/LogAcessoDAO.class
 br/com/adprofissionais/domain/Usuario.class
+br/com/adprofissionais/bean/AutoCompleteView.class
 br/com/adprofissionais/domain/Responsavel.class
 br/com/adprofissionais/bean/UsuarioBean.class
 br/com/adprofissionais/bean/CondominioBean.class
@@ -14,6 +17,7 @@ br/com/adprofissionais/bean/CondominioCadBean.class
 br/com/adprofissionais/bean/ContatoBean.class
 br/com/adprofissionais/bean/EstadoCadBean.class
 br/com/adprofissionais/bean/FuncaoBean.class
+br/com/adprofissionais/util/Util.class
 br/com/adprofissionais/domain/Condominio.class
 br/com/adprofissionais/dao/CondominioDAO.class
 br/com/adprofissionais/dao/FuncaoDAO.class
@@ -24,3 +28,4 @@ br/com/adprofissionais/domain/Estado.class
 br/com/adprofissionais/bean/ContatoCadBean.class
 br/com/adprofissionais/dao/ResponsavelDAO.class
 br/com/adprofissionais/domain/Funcao.class
+br/com/adprofissionais/domain/LogAcesso.class

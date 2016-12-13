@@ -13,34 +13,38 @@
 
 	<ui:define name="conteudo">
 		<h:form id="frmEstCad">
-			<p:panelGrid columns="3" border="true" style="">
-				<p:outputLabel for="txtCodEstNovo" value="Sigla" />
-				<p:inputText id="txtCodEstNovo" size="30" maxlength="50"
-					value="#{MBEstadoCad.estado.codigo}" required="true"
-					requiredMessage="O Campo Sigla é Obrigatório" />
-					<p:commandButton value="teste"/>
+			<p:panelGrid columns="2" cellpadding="5">
 
+				<p:outputLabel value="Sigla" for="txtCodEstNovo" />
+				<p:autoComplete id="txtCodEstNovo"
+					value="#{MBEstadoCad.estado.codigo}"
+					completeMethod="#{MBEstadoCad.completeTextCodigo}" required="true"
+					requiredMessage="O Campo Sigla do estado é Obrigatório" size="5" maxlength="2"
+					onkeyup="maiuscula(this);" />
 
-				<p:outputLabel for="txtDescEstNovo" value="Descrição "
-					style="font-weight:bold" />
-				<p:inputText id="txtDescEstNovo" size="30" maxlength="50"
-					value="#{MBEstadoCad.estado.descricao}" required="true"
-					requiredMessage="O Campo Descrição é Obrigatório" />
-				<p:commandButton value="teste1"/>
-
-				<h:panelGrid columns="4">
-					<p:commandButton value="Gravar"
-						actionListener="#{MBEstadoCad.novo}" update=" :msgGlobal" />
-					<p:commandButton value="Sair" process="@this"
-						onclick="PF('dlgEstNovo').hide();">
-						<p:resetInput target="pnlEstNovo" />
-					</p:commandButton>
-					<p:commandButton value="Pesquisa"
-						actionListener="#{MBEstadoCad.novo}" update=" :msgGlobal" />
-				</h:panelGrid>
-
+				<p:outputLabel value="Estado" for="txtDescEstNovo" />
+				<p:autoComplete id="txtDescEstNovo"
+					value="#{MBEstadoCad.estado.descricao}" size="45" maxlength="45"
+					completeMethod="#{MBEstadoCad.completeText}" required="true"
+					requiredMessage="O Campo descrição do estado é Obrigatório"
+					onkeyup="maiuscula(this);" />
 			</p:panelGrid>
+
+			<p:panelGrid columns="4">
+				<p:commandButton value="Gravar" actionListener="#{MBEstadoCad.novo}"
+					oncomplete="verificar(xhr, status, args,'dlgEstNovo','tabelaEstados');"
+					update=":msgGlobal" />
+				<p:commandButton value="Sair" process="@this"
+					onclick="PF('dlgEstNovo').hide();">
+					<p:resetInput target="pnlEstNovo" />
+				</p:commandButton>
+				<p:commandButton value="Pesquisa"
+					actionListener="#{MBEstadoCad.novo}" update=" :msgGlobal" />
+			</p:panelGrid>
+
+
 		</h:form>
+
 	</ui:define>
 
 </ui:composition>

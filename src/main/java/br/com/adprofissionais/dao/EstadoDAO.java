@@ -107,10 +107,10 @@ public class EstadoDAO {
 	public ArrayList<Estado> buscarDescricao(Estado f) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT codigo, descricao  ");
-		sql.append("FROM Estado " );
+		sql.append("FROM estado " );
 		sql.append(" WHERE descricao LIKE ? ");
 		sql.append("ORDER BY descricao ASC ");	
-		
+	System.out.println(sql);	
 		Connection conexao = ConexaoFactory.conectar();
 		
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
@@ -131,6 +131,32 @@ public class EstadoDAO {
 		return lista;
 	}
 	
+	public ArrayList<Estado> buscarCodigolista(Estado f) throws SQLException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT codigo, descricao  ");
+		sql.append("FROM estado " );
+		sql.append(" WHERE codigo LIKE ? ");
+		sql.append("ORDER BY descricao ASC ");	
+	System.out.println(sql);	
+		Connection conexao = ConexaoFactory.conectar();
+		
+		PreparedStatement comando = conexao.prepareStatement(sql.toString());
+		comando.setString(1, "%" + f.getCodigo() + "%");
+	
+		ResultSet resultado = comando.executeQuery();
+		
+		ArrayList<Estado> lista = new ArrayList<Estado>();
+		
+		while(resultado.next()) {
+			Estado item = new Estado();
+			item.setCodigo(resultado.getString("codigo"));
+			item.setDescricao(resultado.getString("descricao"));
+			lista.add(item);
+			
+		}
+		
+		return lista;
+	}
 	public static void main(String[] args) {
 		Estado f1 = new Estado();
 		Estado f2 = new Estado();

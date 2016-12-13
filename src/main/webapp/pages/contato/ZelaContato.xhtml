@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:panelGrid id="pnlFormZeltNovo" columns="4"
+		style="width:100%; margin-top: 2px"
+		columnClasses="rotulo, campo, rotulo, campo">
+
+		<p:outputLabel value="Nome" for="txtUsuNomCtd" />
+		<p:autoComplete id="txtUsuNomCtd" size="45" dropdown="true"
+			required="true" />
+
+		<p:outputLabel for="txtResTfxCtd" value="Telefone Fixo " />
+		<p:inputMask id="txtResTfxCtd" size="15" maxlength="15"
+			value="#{MBCondominio.condominio.telefonefixo}"
+			requiredMessage="O Campo Telefone Fixo é Obrigatório"
+			mask="(99) 9999-9999" />
+
+		<p:outputLabel for="txtResTclCtd" value="Telefone Celular " />
+		<p:inputMask id="txtResTclCtd" size="15" maxlength="15"
+			value="#{MBCondominio.condominio.telefonecelular}"
+			requiredMessage="O Campo Telefone Fixo é Obrigatório"
+			mask="(99) 99999-9999" />
+
+		<p:outputLabel for="txtResEmaCtd" value="email " />
+		<p:inputText id="txtResEmaCtd" size="45" maxlength="45"
+			value="#{MBCondominio.condominio.email}"
+			requiredMessage="O Campo E-mail é Obrigatório"
+			validatorMessage="E-mail Incorreto">
+			<f:validateRegex
+				pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+		</p:inputText>
+
+
+	</p:panelGrid>
+
+</ui:composition>

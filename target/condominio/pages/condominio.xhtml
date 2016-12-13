@@ -41,9 +41,9 @@
 					<h:outputText value="#{item.telefonefixo}" />
 				</p:column>
 
-				<p:column headerText="Tel. Fixo" sortBy="#{item.telefonecelular}"
-					filterBy="#{item.telefonecelular}">
-					<h:outputText value="#{item.telefonecelular}" />
+				<p:column headerText="E-mail" sortBy="#{item.email}"
+					filterBy="#{item.email}">
+					<h:outputText value="#{item.email}" />
 				</p:column>
 
 
@@ -169,7 +169,15 @@
 						value="#{MBCondominio.condominio.telefonecelular}"
 						requiredMessage="O Campo Telefone Fixo é Obrigatório"
 						mask="(99) 99999-9999" />
-
+						
+					<p:outputLabel for="txtEmaConNovo" value="email " />
+					<p:inputText id="txtEmaConNovo" size="45" maxlength="45"
+						value="#{MBCondominio.condominio.email}"
+						requiredMessage="O Campo E-mail é Obrigatório"
+						validatorMessage="E-mail Incorreto">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+					</p:inputText>
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
@@ -272,6 +280,16 @@
 						value="#{MBCondominio.condominio.telefonecelular}"
 						requiredMessage="O Campo Telefone Fixo é Obrigatório"
 						mask="(99) 99999-9999" />
+						
+											<p:outputLabel for="txtEmaConEditar" value="email " />
+					<p:inputText id="txtEmaConEditar" size="45" maxlength="45"
+						value="#{MBCondominio.condominio.email}"
+						requiredMessage="O Campo E-mail é Obrigatório"
+						validatorMessage="E-mail Incorreto">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						
+											</p:inputText>
 
 				</h:panelGrid>
 				<h:panelGrid columns="2">

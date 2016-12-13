@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<p:dataTable id="tblContato" widgetVar="tabelaEstados"
+				emptyMessage="Nenhum Estado Encontrado."
+				value="#{MBEstado.itens}" var="item"
+				filteredValue="#{MBEstado.itensFiltrados}" paginator="true"
+				rows="2" editable="true">
+
+		<p:column headerText="Data" style="text-aligm: center; width: 10%">
+			<p:inputText size="10" />
+		</p:column>
+		
+		<p:column headerText="Contato" style="text-align: center" >
+			<p:inputText size="45" />
+		</p:column>
+		
+		<p:column headerText="Responsável" style="text-align: center">
+			<p:inputText size="45" />
+		</p:column>
+
+		<p:column headerText="Descrição" style="text-align: center" >
+			<p:inputTextarea id="txtDescCotEditar" size="50" maxlength="50"
+				cols="50" rows="2" value="#{MBContato.contato.descricao}"
+				required="true" requiredMessage="O Campo Descrição é Obrigatório"
+				label="txtDescCotNovo" />
+		</p:column>
+
+	</p:dataTable>
+
+
+</ui:composition>

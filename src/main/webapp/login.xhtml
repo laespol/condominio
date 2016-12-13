@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+
+	<ui:define name="conteudo">
+		<h:form id="loginForm">
+			<p:growl id="msg" showDetail="true" life="3000" />
+			<p:panel header="Login" style="width: 360px; ">
+
+				<h:panelGrid id="loginPanel" columns="2">
+
+					<p:outputLabel value="Usuario" for="username" />
+
+					<p:inputText id="username" value="#{MBUsuario.uname}"
+						required="true"
+						requiredMessage="O campo Usuario tem que estar preenchido" onkeyup="maiuscula(this);" />
+
+					<p:outputLabel value="Senha" for="password" />
+
+					<p:password id="password" value="#{MBUsuario.password}"
+						feedback="false" required="true"
+						requiredMessage="O Campo senha tem que estar preenchido" />
+
+					<p:spacer></p:spacer>
+					<p:commandButton action="#{MBUsuario.loginProject}" value="Login"
+						update="loginForm" ajax="true" />
+
+				</h:panelGrid>
+
+			</p:panel>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

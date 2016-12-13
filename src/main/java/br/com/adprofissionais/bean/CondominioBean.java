@@ -17,16 +17,23 @@ import br.com.adprofissionais.util.JSFUtil;
 @ViewScoped
 public class CondominioBean {
 
+    private Condominio selected;
 	private Condominio condominio ;
 	private ArrayList<Condominio> itens;
 	private ArrayList<Condominio> itensFiltrados;
-	
-	
-	
+		
 	private ArrayList<Estado> comboEstados;
 	
 	public ArrayList<Estado> getComboEstados() {
 		return comboEstados;
+	}
+
+	public Condominio getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Condominio selected) {
+		this.selected = selected;
 	}
 
 	public void setComboEstados(ArrayList<Estado> comboEstados) {
@@ -67,6 +74,20 @@ public class CondominioBean {
 			JSFUtil.adcionarMensagemErro(ex.getMessage());
 		}
 	}
+	
+    public void completeCondominio(){
+		try {
+			CondominioDAO cdao = new CondominioDAO();
+			itens = cdao.listar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adcionarMensagemErro(ex.getMessage());
+		}
+    }
+    public String clear(){
+        this.selected = null;
+        return "";
+    }
 
 	public void novo() {
 		CondominioDAO cdao = new CondominioDAO();

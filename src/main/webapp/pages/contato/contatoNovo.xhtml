@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml" />
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<ui:include src="/includes/BotoesContato.xhtml" />
+
+		<ui:include src="/pages/contato/CapaContato.xhtml" />
+		<p:tabView style="margin-top: 20px">
+			<p:tab title="Contatos">
+				<ui:include src="/pages/contato/ItensContato.xhtml" />
+			</p:tab>
+			<p:tab title="Sindico">
+				<ui:include src="/pages/contato/SindContato.xhtml" />
+			</p:tab>
+			<p:tab title="Zelador">
+				<ui:include src="/pages/contato/ZelaContato.xhtml" />
+			</p:tab>
+		</p:tabView>
+
+	</ui:define>
+
+</ui:composition>

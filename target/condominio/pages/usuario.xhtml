@@ -34,7 +34,7 @@
 				</p:column>
 
 				<p:column headerText="Login" sortBy="#{item.login}"
-					style="text-align:center">
+					style="text-align:center" filterBy="#{item.login}">
 					<h:outputText value="#{item.login}" />
 				</p:column>
 
@@ -42,9 +42,26 @@
 					style="text-align:center">
 					<h:outputText value="#{item.senha}" />
 				</p:column>
+				<p:column headerText="E-mail" sortBy="#{item.email}"
+					style="text-align:center">
+					<h:outputText value="#{item.email}" />
+				</p:column>
+				<p:column headerText="Data Ativação" sortBy="#{item.dataativ}"
+					style="text-align:center">
+					<h:outputText value="#{item.dataativ}" />
+				</p:column>
 
-				
+				<p:column headerText="Data Desativação" sortBy="#{item.datadesativ}"
+					style="text-align:center">
+					<h:outputText value="#{item.datadesativ}" />
+				</p:column>
+
+				<p:column headerText="Status" sortBy="#{item.status}"
+					style="text-align:center">
+					<h:outputText value="#{item.status}" />
+				</p:column>
 				<p:column headerText="Opções">
+
 
 					<p:commandButton icon="ui-icon-trash"
 						oncomplete="PF('dlgUsuExcluir').show();"
@@ -76,21 +93,31 @@
 			appendTo="@(body)">
 			<h:form id="frmUsuNovo">
 				<h:panelGrid id="pnlUsuNovo" columns="2">
-				
-					<p:outputLabel for="txtDescUsuNovo" value="Nome  " style="font-weight:bold"/>
-					<p:inputText id="txtDescUsuNovo" size="30" maxlength="50" 
-								value="#{MBUsuario.usuario.nome}" required="true"
-								requiredMessage="O Campo Nome é Obrigatório" />
-						
-					<p:outputLabel for="txtPrecoUsuNovo" value="Login  " style="font-weight:bold"/>
+
+					<p:outputLabel for="txtDescUsuNovo" value="Nome  "
+						style="font-weight:bold" />
+					<p:inputText id="txtDescUsuNovo" size="30" maxlength="50"
+						value="#{MBUsuario.usuario.nome}" required="true"
+						requiredMessage="O Campo Nome é Obrigatório" onkeyup="maiuscula(this);" />
+
+					<p:outputLabel for="txtPrecoUsuNovo" value="Login  "
+						style="font-weight:bold" />
 					<p:inputText id="txtPrecoUsuNovo" size="30" maxlength="50"
-								value="#{MBUsuario.usuario.login}" required="true"
-								requiredMessage="O Campo Login é Obrigatório" />
-								
-					<p:outputLabel for="txtQtdeUsuNovo" value="Senha  " style="font-weight:bold" />
-					<p:inputText id="txtQtdeUsuNovo" size="30" maxlength="50"
-								value="#{MBUsuario.usuario.senha}" required="true"
-								requiredMessage="O Campo Senha é Obrigatório"/>
+						value="#{MBUsuario.usuario.login}" required="true"
+						requiredMessage="O Campo Login é Obrigatório" onkeyup="maiuscula(this);"/>
+
+					<p:outputLabel for="txtQtdeUsuNovo" value="Senha  "
+						style="font-weight:bold" />
+					<p:password id="txtQtdeUsuNovo" size="30" maxlength="50"
+						value="#{MBUsuario.usuario.senha}" required="true"
+						requiredMessage="O Campo Senha é Obrigatório" />
+
+					<p:outputLabel for="txtQtdeEmaNovo" value="E-mail  "
+						style="font-weight:bold" />
+					<p:inputText id="txtQtdeEmaNovo" size="30" maxlength="50"
+						value="#{MBUsuario.usuario.email}" required="true"
+						requiredMessage="O Campo Email é Obrigatório" />			
+
 
 				</h:panelGrid>
 				<h:panelGrid columns="2">
@@ -120,10 +147,10 @@
 
 					<h:outputLabel value="Preço " />
 					<h:outputText value="#{MBUsuario.usuario.login}" />
-					
+
 					<h:outputLabel value="Quantidade  " />
 					<h:outputText value="#{MBUsuario.usuario.senha}" />
-							
+
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Excluir"
@@ -146,7 +173,8 @@
 					<h:outputLabel value="Código  " />
 					<h:outputText value="#{MBUsuario.usuario.codigo}" />
 
-					<p:outputLabel for="txtDescUsuEditar" value="Nome" style="font-weight:bold"/>
+					<p:outputLabel for="txtDescUsuEditar" value="Nome"
+						style="font-weight:bold" />
 					<p:inputText id="txtDescUsuEditar"
 						value="#{MBUsuario.usuario.nome}" size="30" maxlength="50"
 						required="true" requiredMessage="O Campo Descrição é Obrigatório" />
@@ -155,7 +183,8 @@
 						value="#{MBUsuario.usuario.login}" size="30" maxlength="50"
 						required="true" requiredMessage="O Campo Usuario é Obrigatório" />
 
-					<p:outputLabel for="txtQtdeUsuEditar" value="Usuario  " style="font-weight:bold" />
+					<p:outputLabel for="txtQtdeUsuEditar" value="Usuario  "
+						style="font-weight:bold" />
 					<p:inputText id="txtQtdeUsuEditar"
 						value="#{MBUsuario.usuario.senha}" size="30" maxlength="50"
 						required="true" requiredMessage="O Campo Senha é Obrigatório" />

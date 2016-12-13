@@ -7,12 +7,17 @@
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/bean/CondominioCadBean.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/domain/TipoContato.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/dao/ResponsavelDAO.java
+/home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/converter/CondominioConverter.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/bean/ContatoBean.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/dao/ContatoDAO.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/domain/Usuario.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/bean/ContatoCadBean.java
+/home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/domain/LogAcesso.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/util/JSFUtil.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/domain/Funcao.java
+/home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/bean/AutoCompleteView.java
+/home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/util/Util.java
+/home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/dao/LogAcessoDAO.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/bean/EstadoCadBean.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/bean/CondominioBean.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/dao/UsuarioDAO.java

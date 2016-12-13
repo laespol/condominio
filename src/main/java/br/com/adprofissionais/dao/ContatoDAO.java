@@ -78,7 +78,89 @@ public class ContatoDAO {
 
 	}
 
+	public ArrayList<Contato> buscarPorCondominio(Contato c) throws SQLException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT c.codigo, c.data, c.descricao, c.condominio_codigo, c.responsavel_codigo, c.tipocontato_codigo, ");
+		sql.append("co.codigo,co.descricao, co.endereco,co.cidade,co.bairro, co.cep, co.telefonefixo, co.telefonecelular, co.estado_codigo, ");
+		sql.append("e.codigo, e.descricao, ");
+		sql.append("t.codigo,t.descricao, ");
+		sql.append("f.codigo,f.descricao,f.tipo, ");
+		sql.append("r.codigo, r.funcao_codigo, r.email, r.condominio_codigo, r.telefonecelular, r.telefonefixo ");
+		sql.append(" FROM contato c ");
+		sql.append(" INNER JOIN condominio co ON co.codigo = c.condominio_codigo ");
+		sql.append(" INNER JOIN responsavel r ON r.codigo  = c.responsavel_codigo ");
+		sql.append(" INNER JOIN tipocontato t ON t.codigo = c.tipocontato_codigo ");
+		sql.append(" INNER JOIN funcao  f     ON f.codigo = r.funcao_codigo ");
+		sql.append(" INNER JOIN estado   e    ON e.codigo = co.estado_codigo ");
+		sql.append(" WHERE co.codigo = ? ORDER BY c.data DESC ");
 
+		Connection conexao = ConexaoFactory.conectar();
+
+		PreparedStatement comando = conexao.prepareStatement(sql.toString());
+		comando.setLong(1, c.getCondominio().getCodigo());
+
+		ResultSet resultado = comando.executeQuery();
+		
+		ArrayList<Contato> lista = new ArrayList<Contato>();
+		
+		Contato contato = null;
+
+		while (resultado.next()) {
+			
+			contato = new Contato();
+			
+			Responsavel  responsavel = new Responsavel();
+			Condominio condominio = new Condominio();
+			Funcao     funcao     = new Funcao();
+			Estado     estado     = new Estado();
+			TipoContato tipocontato = new TipoContato();
+			
+			contato.setCodigo(resultado.getLong("c.codigo"));
+			contato.setData(resultado.getDate("c.data"));
+			contato.setDescricao(resultado.getString("c.descricao"));
+			
+			tipocontato.setCodigo(resultado.getLong("t.codigo"));
+			tipocontato.setDescricao(resultado.getString("t.descricao"));
+			
+			
+			responsavel.setCodigo(resultado.getLong("r.codigo"));
+			responsavel.setTelefonecelular(resultado.getString("r.telefonecelular"));
+			responsavel.setTelefonefixo(resultado.getString("r.telefonefixo"));
+			responsavel.setEmail(resultado.getString("r.email"));
+			
+			condominio.setCodigo(resultado.getLong("co.codigo"));
+			condominio.setDescricao(resultado.getString("co.descricao"));
+			condominio.setEndereco(resultado.getString("co.endereco"));
+			condominio.setBairro(resultado.getString("co.bairro"));
+			condominio.setCidade(resultado.getString("co.cidade"));
+			condominio.setCep(resultado.getString("co.cep"));
+			condominio.setTelefonecelular(resultado.getString("co.telefonecelular"));
+			condominio.setTelefonefixo(resultado.getString("co.telefonefixo"));
+			
+			estado.setCodigo(resultado.getString("e.codigo"));
+			estado.setDescricao(resultado.getString("e.descricao"));
+			
+			funcao.setCodigo(resultado.getLong("f.codigo"));
+			funcao.setDescricao(resultado.getString("f.descricao"));
+			funcao.setTipo(resultado.getInt("f.tipo"));
+			
+			
+			
+			condominio.setEstado(estado);
+			responsavel.setCondominio(condominio);
+			responsavel.setFuncao(funcao);
+			
+			contato.setCondominio(condominio);
+			contato.setResponsavel(responsavel);
+			contato.setTipocontato(tipocontato);
+
+			lista.add(contato);
+
+		}
+
+		return lista;		
+	}
+	
 
 	public Contato buscarPorCodigo(Contato c) throws SQLException {
 		StringBuilder sql = new StringBuilder();
