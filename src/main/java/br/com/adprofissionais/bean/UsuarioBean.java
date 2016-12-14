@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -23,9 +24,7 @@ public class UsuarioBean {
 	private ArrayList<Usuario> itens;
 	private ArrayList<Usuario> itensFiltrados;
     private String password;
-    private String uname;
-
-	
+    private String uname;	
 
 	public String getPassword() {
 		return password;
@@ -197,6 +196,7 @@ public class UsuarioBean {
 		       if (result) {
 		            HttpSession session = Util.getSession();
 		            session.setAttribute("username", uname);
+		            session.setAttribute("data", new Date());
 		            return "/pages/principal";
 		        } else { 
 		        	JSFUtil.adcionarMensagemErro("Usuario Inválido");

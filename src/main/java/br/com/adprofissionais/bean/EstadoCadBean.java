@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -19,6 +20,7 @@ import org.primefaces.model.chart.PieChartModel;
 import br.com.adprofissionais.dao.EstadoDAO;
 import br.com.adprofissionais.domain.Estado;
 import br.com.adprofissionais.util.JSFUtil;
+import br.com.adprofissionais.util.Util;
 
 @ManagedBean(name = "MBEstadoCad")
 @ViewScoped
@@ -119,6 +121,8 @@ public class EstadoCadBean {
 		 createCombinedModel();
 		System.out.println("prepara novo");
 		estado = new Estado();
+		HttpSession session = Util.getSession();
+		System.out.println(session.getAttribute("username") + " request");
 	}
 
 	public void novo() {

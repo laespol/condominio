@@ -45,6 +45,8 @@
 				<p:column headerText="E-mail" sortBy="#{item.email}"
 					style="text-align:center">
 					<h:outputText value="#{item.email}" />
+
+
 				</p:column>
 				<p:column headerText="Data Ativação" sortBy="#{item.dataativ}"
 					style="text-align:center">
@@ -98,13 +100,15 @@
 						style="font-weight:bold" />
 					<p:inputText id="txtDescUsuNovo" size="30" maxlength="50"
 						value="#{MBUsuario.usuario.nome}" required="true"
-						requiredMessage="O Campo Nome é Obrigatório" onkeyup="maiuscula(this);" />
+						requiredMessage="O Campo Nome é Obrigatório"
+						onkeyup="maiuscula(this);" />
 
 					<p:outputLabel for="txtPrecoUsuNovo" value="Login  "
 						style="font-weight:bold" />
 					<p:inputText id="txtPrecoUsuNovo" size="30" maxlength="50"
 						value="#{MBUsuario.usuario.login}" required="true"
-						requiredMessage="O Campo Login é Obrigatório" onkeyup="maiuscula(this);"/>
+						requiredMessage="O Campo Login é Obrigatório"
+						onkeyup="maiuscula(this);" />
 
 					<p:outputLabel for="txtQtdeUsuNovo" value="Senha  "
 						style="font-weight:bold" />
@@ -116,8 +120,10 @@
 						style="font-weight:bold" />
 					<p:inputText id="txtQtdeEmaNovo" size="30" maxlength="50"
 						value="#{MBUsuario.usuario.email}" required="true"
-						requiredMessage="O Campo Email é Obrigatório" />			
-
+						requiredMessage="O Campo Email é Obrigatório" validatorMessage="E-mail Incorreto">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+					</p:inputText>
 
 				</h:panelGrid>
 				<h:panelGrid columns="2">
@@ -188,6 +194,15 @@
 					<p:inputText id="txtQtdeUsuEditar"
 						value="#{MBUsuario.usuario.senha}" size="30" maxlength="50"
 						required="true" requiredMessage="O Campo Senha é Obrigatório" />
+
+					<p:outputLabel for="txtEmaUsuEditar" value="E-Mail  "
+						style="font-weight:bold" />
+					<p:inputText id="txtEmaUsuEditar"
+						value="#{MBUsuario.usuario.email}" size="30" maxlength="50"
+						required="true" requiredMessage="O Campo Email é Obrigatório" validatorMessage="E-mail Incorreto">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+					</p:inputText>
 
 				</h:panelGrid>
 				<h:panelGrid columns="2">

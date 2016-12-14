@@ -14,22 +14,23 @@
 </h:head>
 <h:body>
 
-<p:outputLabel value="#{MBUsuario.status}"></p:outputLabel>
+<p:layout fullPage="true">
+	<p:layoutUnit position="north" size="200"  >
+	<h:outputText value="Norte" />
+	</p:layoutUnit>
+	<p:layoutUnit position="south" size="200">
+	<h:outputText value="south" />
+	</p:layoutUnit>
+	<p:layoutUnit position="west" size="200">
+	<h:outputText value="west" />
+	</p:layoutUnit>
+	<p:layoutUnit position="center" footer="footer" header="header">
+	<h:outputText  value="centro"/>
+	</p:layoutUnit>
+		<p:layoutUnit position="east" size="200">
+	<h:outputText value="east" />
+	</p:layoutUnit>
 
-	<p:growl id="msgGlobal" life="3000" />
-
-	<p:layout fullPage="true">
-		<p:layoutUnit position="north">
-			<ui:insert name="menu" />
-		</p:layoutUnit>
-
-		<p:layoutUnit position="center">
-			<ui:insert name="conteudo" />
-		</p:layoutUnit>
-		<p:layoutUnit position="south">
-			<ui:include src="/includes/base.xhtml"></ui:include>
-		</p:layoutUnit>
-	</p:layout>
-
+</p:layout>
 </h:body>
 </html>

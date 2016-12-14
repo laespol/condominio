@@ -13,8 +13,9 @@
 
 	<ui:define name="conteudo">
 		<h:form id="frmEstCad">
-			<p:panelGrid columns="2" cellpadding="5">
 
+			<p:panelGrid columns="2" cellpadding="5">
+		 
 				<p:outputLabel value="Sigla" for="txtCodEstNovo" />
 				<p:autoComplete id="txtCodEstNovo"
 					value="#{MBEstadoCad.estado.codigo}"
@@ -41,7 +42,6 @@
 				<p:commandButton value="Pesquisa"
 					actionListener="#{MBEstadoCad.novo}" update=" :msgGlobal" />
 			</p:panelGrid>
-
 
 		</h:form>
 
