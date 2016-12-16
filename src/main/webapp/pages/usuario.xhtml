@@ -50,12 +50,12 @@
 				</p:column>
 				<p:column headerText="Data Ativação" sortBy="#{item.dataativ}"
 					style="text-align:center">
-					<h:outputText value="#{item.dataativ}" />
+					<h:outputText value="#{item.dataativ}" pattern="dd/MM/yyyy" />
 				</p:column>
 
 				<p:column headerText="Data Desativação" sortBy="#{item.datadesativ}"
 					style="text-align:center">
-					<h:outputText value="#{item.datadesativ}" />
+					<h:outputText value="#{item.datadesativ}" pattern="dd/MM/yyyy" />
 				</p:column>
 
 				<p:column headerText="Status" sortBy="#{item.status}"

@@ -15,10 +15,9 @@
 		<h:form id="frmEstCad">
 
 			<p:panelGrid columns="2" cellpadding="5">
-		 
 				<p:outputLabel value="Sigla" for="txtCodEstNovo" />
 				<p:autoComplete id="txtCodEstNovo"
-					value="#{MBEstadoCad.estado.codigo}"
+					value="#{MBEstadoCad.estado.codigo}" itemValue="#{MBEstado.estado}"
 					completeMethod="#{MBEstadoCad.completeTextCodigo}" required="true"
 					requiredMessage="O Campo Sigla do estado é Obrigatório" size="5" maxlength="2"
 					onkeyup="maiuscula(this);" />

@@ -12,10 +12,12 @@ import br.com.adprofissionais.dao.CondominioDAO;
 import br.com.adprofissionais.dao.ContatoDAO;
 import br.com.adprofissionais.dao.ResponsavelDAO;
 import br.com.adprofissionais.dao.TipoContatoDAO;
+import br.com.adprofissionais.dao.UsuarioDAO;
 import br.com.adprofissionais.domain.Condominio;
 import br.com.adprofissionais.domain.Contato;
 import br.com.adprofissionais.domain.Responsavel;
 import br.com.adprofissionais.domain.TipoContato;
+import br.com.adprofissionais.domain.Usuario;
 import br.com.adprofissionais.util.JSFUtil;
 
 @ManagedBean(name = "MBContato")
@@ -29,6 +31,7 @@ public class ContatoBean {
 	private ArrayList<Condominio> comboCondominios;
 	private ArrayList<Responsavel> comboResponsavels;
 	private ArrayList<TipoContato> comboTipoContatos;
+	private ArrayList<Usuario> comboUsuarios;
 	
 	private Date dataAtual = new Date();
 	
@@ -75,6 +78,15 @@ public class ContatoBean {
 		this.comboTipoContatos = comboTipoContatos;
 	}
 	
+	
+	
+	public ArrayList<Usuario> getComboUsuarios() {
+		return comboUsuarios;
+	}
+	public void setComboUsuarios(ArrayList<Usuario> comboUsuarios) {
+		this.comboUsuarios = comboUsuarios;
+	}
+	
 	@PostConstruct
 	public void prepararPesquisa() {
 		try {
@@ -115,14 +127,19 @@ public class ContatoBean {
 		Responsavel responsavel = new Responsavel();
 		contato.setResponsavel(responsavel);
 		
+		Usuario usuario = new Usuario();
+		responsavel.setUsuario(usuario);
+		
 		CondominioDAO cdao = new CondominioDAO();
 		TipoContatoDAO tdao = new TipoContatoDAO();
 		ResponsavelDAO rdao = new ResponsavelDAO();
+		UsuarioDAO udao = new UsuarioDAO();
 		
 		try {
 			comboCondominios  = cdao.listar();
 			comboTipoContatos = tdao.listar();
 			comboResponsavels = rdao.listarAdm();
+			comboUsuarios     = udao.listar();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adcionarMensagemErro(ex.getMessage());
@@ -145,14 +162,16 @@ public class ContatoBean {
 	}
 	
 	public void prepararEditar() {
-		CondominioDAO cdao = new CondominioDAO();
+		CondominioDAO  cdao = new CondominioDAO();
 		TipoContatoDAO tdao = new TipoContatoDAO();
 		ResponsavelDAO rdao = new ResponsavelDAO();
+		UsuarioDAO     udao = new UsuarioDAO();
 		
 		try {
 			comboCondominios  = cdao.listar();
 			comboTipoContatos = tdao.listar();
 			comboResponsavels = rdao.listarAdm();
+			comboUsuarios     = udao.listar();
 			
 		} catch (SQLException ex) {
 			ex.printStackTrace();

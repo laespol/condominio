@@ -12,6 +12,7 @@ import br.com.adprofissionais.domain.Estado;
 import br.com.adprofissionais.domain.Funcao;
 import br.com.adprofissionais.domain.Responsavel;
 import br.com.adprofissionais.domain.TipoContato;
+import br.com.adprofissionais.domain.Usuario;
 import br.com.adprofissionais.factory.ConexaoFactory;
 
 public class ContatoDAO {
@@ -169,13 +170,15 @@ public class ContatoDAO {
 		sql.append("e.codigo, e.descricao, ");
 		sql.append("t.codigo,t.descricao, ");
 		sql.append("f.codigo,f.descricao,f.tipo, ");
-		sql.append("r.codigo, r.funcao_codigo, r.email, r.condominio_codigo, r.telefonecelular, r.telefonefixo ");
+		sql.append("r.codigo, r.funcao_codigo, r.email, r.condominio_codigo, r.telefonecelular, r.telefonefixo, ");
+		sql.append("u.codigo, u.nome, u.dataativ " );
 		sql.append(" FROM contato c ");
 		sql.append(" INNER JOIN condominio co ON co.codigo = c.condominio_codigo ");
 		sql.append(" INNER JOIN responsavel r ON r.codigo  = c.responsavel_codigo ");
 		sql.append(" INNER JOIN tipocontato t ON t.codigo = c.tipocontato_codigo ");
 		sql.append(" INNER JOIN funcao  f     ON f.codigo = r.funcao_codigo ");
 		sql.append(" INNER JOIN estado   e    ON e.codigo = co.estado_codigo ");
+		sql.append(" INNER JOIN usuario  u    ON u.codigo = r.usuario_codigo  ");
 		sql.append(" WHERE c.codigo = ? ORDER BY c.data DESC ");
 
 		Connection conexao = ConexaoFactory.conectar();
@@ -193,6 +196,7 @@ public class ContatoDAO {
 			Condominio condominio = new Condominio();
 			Funcao     funcao     = new Funcao();
 			Estado     estado     = new Estado();
+			Usuario    usuario    = new Usuario();
 			TipoContato tipocontato = new TipoContato();
 			
 			contato.setCodigo(resultado.getLong("c.codigo"));
@@ -224,11 +228,16 @@ public class ContatoDAO {
 			funcao.setDescricao(resultado.getString("f.descricao"));
 			funcao.setTipo(resultado.getInt("f.tipo"));
 			
+			usuario.setCodigo(resultado.getLong("u.codigo"));
+			usuario.setNome(resultado.getString("u.nome"));
+			usuario.setDataativ(resultado.getDate("u.dataativ"));
+			
 			
 			
 			condominio.setEstado(estado);
 			responsavel.setCondominio(condominio);
 			responsavel.setFuncao(funcao);
+			responsavel.setUsuario(usuario);
 			
 			contato.setCondominio(condominio);
 			contato.setResponsavel(responsavel);
@@ -247,13 +256,15 @@ public class ContatoDAO {
 		sql.append("e.codigo, e.descricao, ");
 		sql.append("t.codigo,t.descricao, ");
 		sql.append("f.codigo,f.descricao,f.tipo, ");
-		sql.append("r.codigo, r.funcao_codigo, r.email, r.condominio_codigo, r.telefonecelular, r.telefonefixo ");
-		sql.append(" FROM contato c ");
+		sql.append("r.codigo, r.funcao_codigo, r.email, r.condominio_codigo, r.telefonecelular, r.telefonefixo , ");
+		sql.append("u.codigo, u.nome, u.dataativ " );
+		sql.append(" FROM contato c ");		
 		sql.append(" INNER JOIN condominio co ON co.codigo = c.condominio_codigo ");
 		sql.append(" INNER JOIN responsavel r ON r.codigo  = c.responsavel_codigo ");
 		sql.append(" INNER JOIN tipocontato t ON t.codigo = c.tipocontato_codigo ");
 		sql.append(" INNER JOIN funcao  f     ON f.codigo = r.funcao_codigo ");
 		sql.append(" INNER JOIN estado   e    ON e.codigo = co.estado_codigo ");
+		sql.append(" INNER JOIN usuario  u    ON u.codigo = r.usuario_codigo  ");
 		sql.append(" ORDER BY c.data DESC ");
 
 
@@ -269,12 +280,13 @@ public class ContatoDAO {
 
 		while (resultado.next()) {
 			
-			contato = new Contato();
+			contato = new Contato();			
 			
 			Responsavel  responsavel = new Responsavel();
 			Condominio condominio = new Condominio();
 			Funcao     funcao     = new Funcao();
 			Estado     estado     = new Estado();
+			Usuario    usuario    = new Usuario();
 			TipoContato tipocontato = new TipoContato();
 			
 			contato.setCodigo(resultado.getLong("c.codigo"));
@@ -304,13 +316,17 @@ public class ContatoDAO {
 			
 			funcao.setCodigo(resultado.getLong("f.codigo"));
 			funcao.setDescricao(resultado.getString("f.descricao"));
-			funcao.setTipo(resultado.getInt("f.tipo"));
+			funcao.setTipo(resultado.getInt("f.tipo"));			responsavel.setUsuario(usuario);
 			
+			usuario.setCodigo(resultado.getLong("u.codigo"));
+			usuario.setNome(resultado.getString("u.nome"));
+			usuario.setDataativ(resultado.getDate("u.dataativ"));
 			
 			
 			condominio.setEstado(estado);
 			responsavel.setCondominio(condominio);
 			responsavel.setFuncao(funcao);
+			responsavel.setUsuario(usuario);
 			
 			contato.setCondominio(condominio);
 			contato.setResponsavel(responsavel);

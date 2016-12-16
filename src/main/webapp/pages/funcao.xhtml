@@ -75,7 +75,7 @@
 					<p:outputLabel for="txtDescFunNovo" value="Descrição " style="font-weight:bold"/>
 					<p:inputText id="txtDescFunNovo" size="30" maxlength="50"
 						value="#{MBFuncao.funcao.descricao}" required="true"
-						requiredMessage="O Campo Descrição é Obrigatório" />
+						requiredMessage="O Campo Descrição é Obrigatório" onkeyup="maiuscula(this);" />
 						
 					<p:outputLabel for="txtTipoFunNovo" value="Tipo " style="font-weight:bold"/>
 					<p:inputText id="txtTipoFunNovo" size="3" maxlength="2"
@@ -139,7 +139,7 @@
 					<p:outputLabel for="txtDescFunEditar" value="Descrição" style="font-weight:bold"/>
 					<p:inputText id="txtDescFunEditar"
 						value="#{MBFuncao.funcao.descricao}" size="30" maxlength="50"
-						required="true" requiredMessage="Campo Descrição é Obrigatorio" />
+						required="true" requiredMessage="Campo Descrição é Obrigatorio" onkeyup="maiuscula(this);" />
 
 					<p:outputLabel for="txtTipoFunEditar" value="Descrição" style="font-weight:bold" />
 					<p:inputText id="txtTipoFunEditar"

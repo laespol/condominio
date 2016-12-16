@@ -121,6 +121,7 @@ public class ResponsavelBean {
 			comboCondominios = cdao.listar();
 			comboFuncaos = fdao.listar();
 			comboUsuarios = udao.listar();
+			System.out.println(comboCondominios);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			JSFUtil.adcionarMensagemErro(ex.getMessage());

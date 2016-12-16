@@ -77,7 +77,6 @@ public class UsuarioBean {
 	}
 
 	public void novo() {
-		System.out.println("entrei no salvar");
 
 		System.out.println(usuario.getSenha());
 		String s = usuario.getSenha();
@@ -90,7 +89,6 @@ public class UsuarioBean {
 				hexString.append(String.format("%02X", 0xFF & b));
 			}
 			usuario.setSenha(hexString.toString());
-			System.out.println("SHA-256 " + usuario.getSenha());
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			JSFUtil.adcionarMensagemErro(e.getMessage());
@@ -142,7 +140,6 @@ public class UsuarioBean {
 					hexString.append(String.format("%02X", 0xFF & b));
 				}
 				usuario.setSenha(hexString.toString());
-				System.out.println("SHA-256 " + usuario.getSenha());
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 				JSFUtil.adcionarMensagemErro(e.getMessage());
@@ -168,7 +165,6 @@ public class UsuarioBean {
 	}
 	
     public String loginProject() {
-    	System.out.println(uname + " " + password);
     	String s = password;
 		try {
 	    	MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
@@ -179,7 +175,6 @@ public class UsuarioBean {
 	    	  hexString.append(String.format("%02X", 0xFF & b));
 	    	}
 	    	password = hexString.toString();
-	    	System.out.println("SHA-256 " + password);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			JSFUtil.adcionarMensagemErro(e.getMessage());
@@ -192,6 +187,7 @@ public class UsuarioBean {
     	
         boolean result;
 		try {
+			System.out.println("Uname = "  + uname );
 			result = uDAO.login(uname, password);
 		       if (result) {
 		            HttpSession session = Util.getSession();
@@ -215,4 +211,8 @@ public class UsuarioBean {
         session.invalidate();
         return "login";
      }
+    
+    public void status() {
+    	System.out.println("entrei no status" + uname);
+    }
 }

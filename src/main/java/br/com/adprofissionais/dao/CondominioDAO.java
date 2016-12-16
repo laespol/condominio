@@ -17,7 +17,7 @@ public class CondominioDAO {
 		sql.append("INSERT INTO condominio ");
 		sql.append("(descricao,endereco, bairro, cidade, cep,  ");
 		sql.append("telefonefixo, telefonecelular , estado_codigo, email) ");
-		sql.append("VALUES (?,?,?,?,?,?,?,?) ");
+		sql.append("VALUES (?,?,?,?,?,?,?,?,?) ");
 
 		Connection conexao = ConexaoFactory.conectar();
 
@@ -149,6 +149,8 @@ public class CondominioDAO {
 			estado.setCodigo(resultado.getString("e.codigo"));
 			estado.setDescricao(resultado.getString("e.descricao"));
 			
+			System.out.println(condominio.getCodigo() + " " + condominio.getDescricao());
+			
 			condominio.setEstado(estado);
 			lista.add(condominio);
 
@@ -257,7 +259,6 @@ public class CondominioDAO {
 
 		ResultSet resultado = comando.executeQuery();
 
-		ArrayList<Condominio> lista = new ArrayList<Condominio>();
 		Condominio condominio = null;
 		if (resultado.next()) {
 			condominio = new Condominio();

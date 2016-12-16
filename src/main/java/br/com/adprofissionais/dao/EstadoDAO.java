@@ -57,10 +57,12 @@ public class EstadoDAO {
 		
 	}
 	
-	public Estado  buscarPorCodigo (Estado f) throws SQLException{
+	public Estado buscarPorCodigo (Estado f) throws SQLException{
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT codigo, descricao  ");
 		sql.append("FROM estado WHERE  codigo  = ? ");	
+		System.out.println(sql);		
+		System.out.println(" dao codigo = " + f.getCodigo());
 		
 		Connection conexao = ConexaoFactory.conectar();
 		
@@ -68,12 +70,11 @@ public class EstadoDAO {
 		comando.setString(1, f.getCodigo());
 		
 		ResultSet resultado = comando.executeQuery();
-		Estado retorno = null;
+		Estado retorno = new Estado();
 		if(resultado.next()){
-			retorno = new Estado();
+//			retorno = new Estado();
 			retorno.setCodigo(resultado.getString("codigo"));
-			retorno.setDescricao(resultado.getString("descricao"));
-			
+			retorno.setDescricao(resultado.getString("descricao"));		
 		}
 		return retorno;
 

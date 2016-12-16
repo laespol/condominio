@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sistema ADCON</title>
+	<h:outputStylesheet library="css" name="estilos.css" />
+	<h:outputScript library="js" name="scripts.js" />
+</h:head>
+
+<h:body>
+
+	<p:growl id="msgs" showDetail="true" />
+	<p:notificationBar position="top" effect="slide" styleClass="top"
+		widgetVar="bar">
+		<h:outputText value="Sistema Adcon" style="font-size:36px;" />
+	</p:notificationBar>
+	<h:form id="frmteste">
+		<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10"
+			layout="grid" styleClass="ui-panelgrid-blank" id="panel">
+
+			<p:clock />
+			<h:outputText value="Focus/Blur: " />
+			<p:inputText id="focus"
+				title="This tooltip is displayed when input gets the focus" />
+			<p:tooltip id="toolTipFocus" for="focus" showEvent="focus"
+				hideEvent="blur" />
+			<p:focus context="panel" />
+			<p:inplace id="basic">
+				<p:inputText value="#{MBTeste.nome}">
+					<p:ajax event="blur" update="u01" listener="#{MBTeste.teste1}" />
+				</p:inputText>
+			</p:inplace>
+
+			<p:inputText value="#{MBTeste.nome}">
+				<p:ajax event="blur" update="u01" listener="#{MBTeste.onDateSelect}" />
+			</p:inputText>
+
+			<p:outputLabel for="button1" value="Button:" />
+
+			<p:calendar id="button1" value="#{MBTeste.data}" showOn="button"
+				locale="pt_BR" pattern="dd/MM/yyyy HH:mm:ss" />
+
+			<p:calendar id="button2" value="#{MBTeste.data}" showOn="button"
+				locale="pt_BR" />
+
+			<h:outputText id="u01" value="#{MBTeste.nome}" />
+			<h:outputText value="#{MBTeste.data}">
+				<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+			</h:outputText>
+
+			<p:separator />
+
+			<p:outputLabel for="event" value="Select Event:" />
+			<p:calendar id="event" value="#{MBTeste.data}">
+				<p:ajax event="dateSelect" listener="#{MBTeste.onDateSelect}"
+					update="frmteste :msgs" />
+			</p:calendar>
+
+			<h:panelGrid columns="3">
+				<h:outputText value="Keyup: " />
+				<p:inputText id="counter" value="#{MBTeste.nome}">
+					<p:ajax event="blur" update="frmteste"
+						listener="#{MBTeste.handleKeyEvent}" />
+				</p:inputText>
+
+				<h:outputText id="out" value="#{MBTeste.nome}" />
+				<h:outputText value="Interleaved 2 of 5" />
+				<p:barcode value="0123456789" type="int2of5" />
+			</h:panelGrid>
+			<p:commandButton value="Show" onclick="PF('bar').show()"
+				type="button" icon="ui-icon-arrow-1-s" />
+			<p:commandButton value="Hide" onclick="PF('bar').hide()"
+				type="button" icon="ui-icon-arrow-1-n" />
+
+
+			<p:commandButton actionListener="#{MBTeste.teste}" value="teste"
+				icon="fa fa-user" type="button" update="frmteste" />
+		</p:panelGrid>
+
+		<p:column>
+			<p:inputNumber id="input2" value="#{MBTeste.input2}" symbol=" CHF"
+				symbolPosition="s" decimalSeparator="," thousandSeparator=".">
+				<p:ajax update="output2" />
+			</p:inputNumber>
+		</p:column>
+		<p:commandButton value="Destroy the World"
+			actionListener="#{dialogView.destroyWorld}" update="msgs">
+			<p:confirm header="Confirmation" message="Are you sure?"
+				icon="ui-icon-alert" />
+		</p:commandButton>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+		<p:column>
+			<p:inputText id="output2" disabled="true" value="#{MBTeste.input2}" />
+		</p:column>
+
+		<h:panelGrid id="pnluis" columns="1" style="margin-bottom: 10px"
+			styleClass="knob-container ui-corner-all">
+			<p:inputText id="txtxt3" value="#{MBTeste.number3}" />
+			<p:slider   for="txtxt3" step="10" />
+
+			<p:knob value="#{MBTeste.number3}" max="100" step="10" foregroundColor="#808080" backgroundColor="#0000FF" />
+		</h:panelGrid>
+
+
+
+		<div class="knob-container  ui-corner-all">
+			<p:knob max="100" step="10" value="30" />
+		</div>
+
+		<p:fileUpload value="#{fileUploadView.file}" mode="simple"
+			skinSimple="true" label="Upload" />
+
+		<p:commandButton value="Print" type="button" icon="ui-icon-print"
+			style="display:block;margin-bottom: 20px">
+			<p:printer target="image" />
+		</p:commandButton>
+
+		<p:graphicImage id="image" name="demo/images/nature/nature10.jpg" />
+
+		<h3>Slider with Step Factor</h3>
+		<h:panelGrid columns="1" style="margin-bottom: 10px">
+			<p:inputText id="txt3" value="#{MBTeste.number3}" />
+			<p:slider for="txt3" step="10" />
+		</h:panelGrid>
+	</h:form>
+
+</h:body>
+</html>

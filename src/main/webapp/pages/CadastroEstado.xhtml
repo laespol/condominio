@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/modeloSistema.xhtml">
+
+	<ui:define name="menu">
+		<ui:include src="/includes/menuPrincipal.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="frmEstCad">
+			<h1>Estado</h1>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:button value="Novo" />
+					<p:commandButton value="Salvar" id="BotaoSalvar"
+						actionListener="#{MBEstadoCad.novo}" update="frmEstCad :msgGlobal"
+						oncomplete="verificar(xhr, status, args,'dlgEstNovo','tabelaEstados');" />
+					<p:commandButton value="Excluir" id="BotaoExcluir"
+						actionListener="#{MBEstadoCad.excluir}" update=":msgGlobal"
+						oncomplete="verificar(xhr, status, args,'dlgEstNovo','tabelaEstados');" />
+				</p:toolbarGroup>
+				
+				<p:toolbarGroup align="right">
+					<p:commandButton value="Pesquisa" id="BotaoPesq"
+						actionListener="#{MBEstadoCad.prepararPesquisa}"
+						update="frmEstCad :msgGlobal" rendered="true"
+						oncomplete="verificar(xhr, status, args,'dlgEstNovo','tabelaEstados');" />
+				</p:toolbarGroup>
+
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+
+				<p:outputLabel value="Sigla" for="codigo" />
+				<p:autoComplete id="codigo" value="#{MBEstadoCad.estado.codigo}"
+					itemValue="#{MBEstado.estado}"
+					completeMethod="#{MBEstadoCad.completeTextCodigo}" required="true"
+					requiredMessage="O Campo Sigla do estado é Obrigatório" size="5"
+					maxlength="2" onkeyup="maiuscula(this);" >
+					            <p:ajax event="blur" update="frmEstCad" listener="#{MBEstadoCad.prepararPesquisa}" />
+					</p:autoComplete>
+
+				<p:outputLabel value="Nome do Estado" for="descricao" />
+				<p:inputText id="descricao" size="45" maxlength="45"
+					requiredMessage="O Campo Descriao do estado é Obrigatório"
+					value="#{MBEstadoCad.estado.descricao}" onkeyup="maiuscula(this);" />
+
+
+			</p:panelGrid>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
