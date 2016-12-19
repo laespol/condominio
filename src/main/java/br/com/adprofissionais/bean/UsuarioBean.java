@@ -6,10 +6,13 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
 
 import br.com.adprofissionais.dao.UsuarioDAO;
 import br.com.adprofissionais.domain.Usuario;
@@ -77,6 +80,9 @@ public class UsuarioBean {
 	}
 
 	public void novo() {
+		Logger logger = Logger.getLogger("adcon");
+		  logger.info("iniciando aplicação");
+		  logger.debug("debug here");
 
 		System.out.println(usuario.getSenha());
 		String s = usuario.getSenha();
@@ -101,6 +107,7 @@ public class UsuarioBean {
 			udao.salvar(usuario);
 			itens = udao.listar();
 			JSFUtil.adcionarMensagemSucesso("Usuario Salvo com Sucesso");
+			logger.info("usuario salvo no banco com sucesso");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			JSFUtil.adcionarMensagemErro(e.getMessage());
@@ -165,6 +172,7 @@ public class UsuarioBean {
 	}
 	
     public String loginProject() {
+		System.out.println (TimeZone.getDefault());
     	String s = password;
 		try {
 	    	MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
@@ -193,6 +201,8 @@ public class UsuarioBean {
 		            HttpSession session = Util.getSession();
 		            session.setAttribute("username", uname);
 		            session.setAttribute("data", new Date());
+		            System.out.println("atribulo gravado =" + session.getAttribute("username"));
+		            
 		            return "/pages/principal";
 		        } else { 
 		        	JSFUtil.adcionarMensagemErro("Usuario Inválido");
@@ -207,12 +217,31 @@ public class UsuarioBean {
     }
 
     public String logout() {
+    	System.out.println("entrei no logout");
         HttpSession session = Util.getSession();
         session.invalidate();
-        return "login";
+        return "/login.xhtml";
      }
     
-    public void status() {
+    public String status() {
     	System.out.println("entrei no status" + uname);
+    	HttpSession session = Util.getSession();
+    	String username = (String) session.getAttribute("username");
+    	if (session.getAttribute("username") != null) {
+    		System.out.println("achei ");
+    		UsuarioDAO udao = new UsuarioDAO();
+    		try {
+				return udao.nomeLogin(username);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				JSFUtil.adcionarMensagemErro(e.getMessage());
+	            session.invalidate();
+	            return "/login.xhtml";
+			}
+    	} else {
+        	JSFUtil.adcionarMensagemErro("Não Logado no sistema");
+            session.invalidate();
+            return "/login.xhtml";
+    	}
     }
 }

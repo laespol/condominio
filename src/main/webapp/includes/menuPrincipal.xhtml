@@ -9,25 +9,31 @@
 	<h:form>
 		<p:menubar>
 			<p:submenu label="Cadastros">
-				<p:menuitem value="Tipo de Contato"	outcome="/pages/tipocontato.xhtml" />
-				<p:menuitem value="Função"	outcome="/pages/funcao.xhtml" />
-				<p:menuitem value="Usuario" outcome="/pages/usuario.xhtml"/>
-				<p:menuitem value="Condomino" outcome="/pages/condominio.xhtml"/>
-				<p:menuitem value="Responsavel" outcome="/pages/responsavel.xhtml"/>				
-				<p:menuitem value="Estado" outcome="/pages/estado.xhtml"/>				
-				<p:menuitem value="Contato" outcome="/pages/contato.xhtml"/>				
-				<p:menuitem value="Sair"   outcome="/login.xhtml"/>
-				<p:menuitem value="Imprimir" icon="ui-icon-print" />
+				<p:menuitem value="Tipo de Contato"
+					outcome="/pages/tipocontato.xhtml" />
+				<p:menuitem value="Função" outcome="/pages/funcao.xhtml" />
+				<p:menuitem value="Usuario" outcome="/pages/usuario.xhtml" />
+				<p:menuitem value="Condomino" outcome="/pages/condominio.xhtml" />
+				<p:menuitem value="Responsavel" outcome="/pages/responsavel.xhtml" />
+				<p:menuitem value="Estado" outcome="/pages/estado.xhtml" />
+				<p:menuitem value="Contato" outcome="/pages/contato.xhtml" />
+				<p:menuitem value="Sair" outcome="/login.xhtml" />
 			</p:submenu>
 			<p:submenu label="Acesso">
 				<p:menuitem value="Estado" outcome="/pages/estadocad.xhtml" />
-				<p:menuitem value="Contato" outcome="/pages/contato/contatoNovo.xhtml" />
+				<p:menuitem value="Contato"
+					outcome="/pages/contato/contatoNovo.xhtml" />
 			</p:submenu>
 			<p:submenu label="Ajuda">
 				<p:menuitem value="Sobre" />
-			</p:submenu>			
+			</p:submenu>
+			<f:facet name="options">
+					Bem Vindo Ao Sistema <p:outputLabel value="#{MBUsuario.status()}" />
+
+				<p:commandButton type="button" value="#{bundle.logOut}" icon="ui-icon-extlink"
+					actionListener="#{MBUsuario.logout}" />
+			</f:facet>
 		</p:menubar>
-        <p:commandButton action="#{MBUsuario.logout}" value="Sair"  ajax="false"/>
 	</h:form>
 
 </ui:composition>

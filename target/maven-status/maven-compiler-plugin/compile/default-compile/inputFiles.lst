@@ -23,6 +23,7 @@
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/dao/UsuarioDAO.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/bean/EstadoBean.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/bean/FuncaoBean.java
+/home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/bean/TesteBean.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/factory/ConexaoFactory.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/domain/Estado.java
 /home/laespol/workspace/condominio/src/main/java/br/com/adprofissionais/dao/TipoContatoDAO.java

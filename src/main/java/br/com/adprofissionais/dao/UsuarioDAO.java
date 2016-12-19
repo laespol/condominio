@@ -19,18 +19,18 @@ public class UsuarioDAO {
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO usuario ");
 		sql.append("(nome,login,senha,email, dataativ, status) ");
-		sql.append("VALUES (?,?,?,?,?,?) ");		
+		sql.append("VALUES (?,?,?,?,?,?) ");
 
 		System.out.println(sql);
 		Date date = new Date();
-		
-		Connection conexao = ConexaoFactory.conectar();		
+
+		Connection conexao = ConexaoFactory.conectar();
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
 		comando.setString(1, u.getNome());
 		comando.setString(2, u.getLogin());
 		comando.setString(3, u.getSenha());
 		comando.setString(4, u.getEmail());
-		comando.setTimestamp(5, new java.sql.Timestamp(date.getTime()) );
+		comando.setTimestamp(5, new java.sql.Timestamp(date.getTime()));
 		comando.setString(6, "A");
 
 		comando.executeUpdate();
@@ -41,13 +41,13 @@ public class UsuarioDAO {
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE usuario ");
 		sql.append("SET datadesativ = ?, status = ? ");
-		sql.append("WHERE codigo = ? ");		
+		sql.append("WHERE codigo = ? ");
 
 		Date date = new Date();
 		Connection conexao = ConexaoFactory.conectar();
 
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
-		comando.setTimestamp(1, new java.sql.Timestamp(date.getTime()) );
+		comando.setTimestamp(1, new java.sql.Timestamp(date.getTime()));
 		comando.setString(2, "I");
 
 		comando.setLong(3, u.getCodigo());
@@ -99,9 +99,9 @@ public class UsuarioDAO {
 		usuario.setLogin(resultado.getString("u.login"));
 		usuario.setSenha(resultado.getString("u.senha"));
 		usuario.setEmail(resultado.getString("u.email"));
-		usuario.setDataativ(resultado.getDate("u.dataativ"));	
+		usuario.setDataativ(resultado.getDate("u.dataativ"));
 		usuario.setDatadesativ(resultado.getDate("u.datadesativ"));
-		usuario.setStatus(resultado.getString("u.status"));		
+		usuario.setStatus(resultado.getString("u.status"));
 		return usuario;
 
 	}
@@ -128,9 +128,9 @@ public class UsuarioDAO {
 			usuario.setLogin(resultado.getString("u.login"));
 			usuario.setSenha(resultado.getString("u.senha"));
 			usuario.setEmail(resultado.getString("u.email"));
-			usuario.setDataativ(resultado.getDate("u.dataativ"));	
+			usuario.setDataativ(resultado.getDate("u.dataativ"));
 			usuario.setDatadesativ(resultado.getDate("u.datadesativ"));
-			usuario.setStatus(resultado.getString("u.status"));	
+			usuario.setStatus(resultado.getString("u.status"));
 			lista.add(usuario);
 
 		}
@@ -145,7 +145,7 @@ public class UsuarioDAO {
 		sql.append("FROM usuario u  ");
 		sql.append("where u.nome LIKE ? ");
 		sql.append("ORDER BY u.nome ASC ");
-		
+
 		Connection conexao = ConexaoFactory.conectar();
 
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
@@ -162,61 +162,84 @@ public class UsuarioDAO {
 			usuario.setLogin(resultado.getString("u.login"));
 			usuario.setSenha(resultado.getString("u.senha"));
 			usuario.setEmail(resultado.getString("u.email"));
-			usuario.setDataativ(resultado.getDate("u.dataativ"));	
+			usuario.setDataativ(resultado.getDate("u.dataativ"));
 			usuario.setDatadesativ(resultado.getDate("u.datadesativ"));
-			usuario.setStatus(resultado.getString("u.status"));	
+			usuario.setStatus(resultado.getString("u.status"));
 			lista.add(usuario);
 
 		}
 		return lista;
 	}
-	
+
+	public String nomeLogin(String username) throws SQLException {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT u.nome ");
+		sql.append("FROM usuario u  ");
+		sql.append("where u.login = ? ");
+
+		String nome = null;
+
+		Connection conexao = ConexaoFactory.conectar();
+
+		PreparedStatement comando = conexao.prepareStatement(sql.toString());
+		comando.setString(1, username);
+
+		ResultSet resultado = comando.executeQuery();
+
+		if (resultado.next()) {
+
+			nome = resultado.getString("u.nome");
+			nome = nome + " ";
+			System.out.println(nome);
+		}
+		return nome;
+	}
+
 	public boolean login(String user, String password) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT u.login , u.senha ");
 		sql.append("FROM usuario u  ");
 		sql.append("where u.login =  ? and u.senha = ? ");
-		
+
 		Connection conexao = ConexaoFactory.conectar();
 
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
-		
-			comando.setString(1, user);
-			comando.setString(2, password);
+
+		comando.setString(1, user);
+		comando.setString(2, password);
 
 		ResultSet resultado = comando.executeQuery();
-		
+
 		LogAcesso l = new LogAcesso();
 		boolean permite = false;
 		l.setLogin(user);
-		
-        if (resultado.next()) // found
-        {
-            System.out.println(resultado.getString("u.login"));
-            l.setSucesso("Permitido");
-            permite = true;
-        }
-        else {
-        	l.setSucesso("Negado");
-            permite =  false;
-        }
-        LogAcessoDAO ldao = new LogAcessoDAO();
-        
-        ldao.salvar(l);
-        
-        return permite;
+
+		if (resultado.next()) // found
+		{
+			System.out.println(resultado.getString("u.login"));
+			l.setSucesso("Permitido");
+			permite = true;
+		} else {
+			l.setSucesso("Negado");
+			permite = false;
+		}
+		LogAcessoDAO ldao = new LogAcessoDAO();
+
+		ldao.salvar(l);
+
+		return permite;
 	}
 
 	public static void main(String[] args) {
 		Usuario u1 = new Usuario();
-		Funcao  f1 = new Funcao();
-		
+		Funcao f1 = new Funcao();
+
 		u1.setNome("Luis Antonio Espoladore");
 		u1.setLogin("laespol34");
 		u1.setSenha("lae123");
-		
+
 		f1.setCodigo(1L);
-		
+
 		UsuarioDAO udao = new UsuarioDAO();
 
 		try {

@@ -66,7 +66,7 @@
 
 				</p:column>
 				<p:rowExpansion>
-					<p:panelGrid columns="2" columnClasses="label,value"
+					<p:panelGrid columns="4" columnClasses="label,value"
 						style="width:500px">
 
 						<h:outputText value="Endereço " />
@@ -79,26 +79,11 @@
 						<h:outputText value="#{item.estado.descricao}" />
 						<h:outputText value="CEP" />
 						<h:outputText value="#{item.cep}" />
-
+						<h:outputText value="Celular" />
+						<h:outputText value="#{item.telefonecelular}" />
 
 					</p:panelGrid>
-					<h:form id="frmResListagem">
-						<p:dataTable id="tblResponsavels" widgetVar="tabelaResponsavels"
-							emptyMessage="Nenhum Responsavel Encontrado."
-							value="#{MBResponsavel.itens}" var="item"
-							filteredValue="#{MBResponsavel.itensFiltrados}" paginator="true"
-							rows="10" editable="true">
 
-							<f:facet name="header">
-								Responsavel - Listagem
-							</f:facet>
-
-							<p:column headerText="Cód." sortBy="#{item.codigo}"
-								filterBy="#{item.codigo}" style="text-align:center">
-								<h:outputText value="#{item.codigo}" />
-							</p:column>
-						</p:dataTable>
-					</h:form>
 				</p:rowExpansion>
 
 				<f:facet name="footer">
@@ -124,22 +109,22 @@
 					<p:inputText id="txtDescConNovo" size="50" maxlength="50"
 						value="#{MBCondominio.condominio.descricao}" required="true"
 						requiredMessage="O Campo Descrição é Obrigatório"
-						label="txtDescConNovo" />
+						label="txtDescConNovo" onkeyup="maiuscula(this);" />
 
 					<p:outputLabel for="txtEnderecoConNovo" value="Endereco " />
 					<p:inputText id="txtEnderecoConNovo" size="50" maxlength="50"
 						value="#{MBCondominio.condominio.endereco}"
-						requiredMessage="O Campo Endereco é Obrigatório" />
+						requiredMessage="O Campo Endereco é Obrigatório" onkeyup="maiuscula(this);" />
 
 					<p:outputLabel for="txtBaiConNovo" value="Bairro " />
 					<p:inputText id="txtBaiConNovo" size="50" maxlength="50"
 						value="#{MBCondominio.condominio.bairro}"
-						requiredMessage="O Campo Bairro é Obrigatório" />
+						requiredMessage="O Campo Bairro é Obrigatório" onkeyup="maiuscula(this);" />
 
 					<p:outputLabel for="txtCidConNovo" value="Cidade " />
 					<p:inputText id="txtCidConNovo" size="50" maxlength="50"
 						value="#{MBCondominio.condominio.cidade}"
-						requiredMessage="O Campo Cidade é Obrigatório" />
+						requiredMessage="O Campo Cidade é Obrigatório" onkeyup="maiuscula(this);" />
 
 					<p:outputLabel for="cbEstConNovo" value="Estado "
 						style="font-weight:bold" />
@@ -238,20 +223,20 @@
 					<p:inputText id="txtDescConEditar" size="50" maxlength="50"
 						value="#{MBCondominio.condominio.descricao}" required="true"
 						requiredMessage="O Campo Descrição é Obrigatório"
-						label="txtDescConNovo" />
+						label="txtDescConNovo" onkeyup="maiuscula(this);" />
 
 					<p:outputLabel for="txtEndConEditar" value="Endereço" />
 					<p:inputText id="txtEndConEditar"
 						value="#{MBCondominio.condominio.endereco}" size="30"
-						maxlength="50" />
+						maxlength="50" onkeyup="maiuscula(this);" />
 
 					<p:outputLabel for="txtBaiConEditar" value="Bairro" />
 					<p:inputText id="txtBaiConEditar"
-						value="#{MBCondominio.condominio.bairro}" size="30" maxlength="50" />
+						value="#{MBCondominio.condominio.bairro}" size="30" maxlength="50" onkeyup="maiuscula(this);" />
 
 					<p:outputLabel for="txtCitConEditar" value="Cidade" />
 					<p:inputText id="txtCitConEditar"
-						value="#{MBCondominio.condominio.cidade}" size="30" maxlength="50" />
+						value="#{MBCondominio.condominio.cidade}" size="30" maxlength="50" onkeyup="maiuscula(this);" />
 
 					<p:outputLabel for="txtEstConEditar" value="Estado"
 						style="font-weight:bold" />

@@ -34,8 +34,19 @@
 					filterBy="#{item.condominio.descricao}" style="text-align:center">
 					<h:outputText value="#{item.condominio.descricao}" />
 				</p:column>
+								<p:column headerText="Dt. Contato" sortBy="#{item.data}"
+					filterBy="#{item.data}" style="text-align:center">
+					<h:outputText value="#{item.data}" pattern="dd/MM/yyyy" />
+				</p:column>
+				
+								<p:column headerText="Telefone"
+					sortBy="#{item.condominio.telefonefixo}"
+					filterBy="#{item.condominio.telefonefixo}"
+					style="text-align:center">
+					<h:outputText value="#{item.condominio.telefonefixo}" />
+				</p:column>
 
-				<p:column headerText="usuario" sortBy="#{item.responsavel.email}"
+				<p:column headerText="E-Mail" sortBy="#{item.responsavel.email}"
 					filterBy="#{item.responsavel.email}" style="text-align:center">
 					<h:outputText value="#{item.responsavel.email}" />
 				</p:column>
@@ -45,18 +56,6 @@
 					filterBy="#{item.responsavel.usuario.nome}"
 					style="text-align:center">
 					<h:outputText value="#{item.responsavel.usuario.nome}" />
-				</p:column>
-
-				<p:column headerText="usuario"
-					sortBy="#{item.responsavel.usuario.codigo}"
-					filterBy="#{item.responsavel.usuario.codigo}"
-					style="text-align:center">
-					<h:outputText value="#{item.responsavel.usuario.codigo}" />
-				</p:column>
-
-				<p:column headerText="usuario" sortBy="#{item.data}"
-					filterBy="#{item.data}" style="text-align:center">
-					<h:outputText value="#{item.data}" pattern="dd/MM/yyyy" />
 				</p:column>
 
 				<p:column headerText="Tipo Contato"

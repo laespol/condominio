@@ -32,7 +32,7 @@
 					<h:outputText value="#{item.descricao}" />
 				</p:column>
 
-				<p:column headerText="Tipo" sortBy="#{item.tipo}"
+				<p:column headerText="#{bundle.type}" sortBy="#{item.tipo}"
 					filterBy="#{item.tipo}">
 					<h:outputText value="#{item.tipo}" />
 				</p:column>
@@ -55,7 +55,7 @@
 				</p:column>
 
 				<f:facet name="footer">
-					<p:commandButton value="Novo"
+					<p:commandButton value="#{bundle.create}"
 						actionListener="#{MBFuncao.prepararNovo}"
 						oncomplete="PF('dlgFunNovo').show();"
 						update=":frmFunNovo:pnlFunNovo :msgGlobal" />
@@ -65,7 +65,7 @@
 		</h:form>
 
 		<p:dialog widgetVar="dlgFunNovo" closable="false" draggable="false"
-			resizable="flase" header="Funcao - Novo" modal="true"
+			resizable="flase" header="#{bundle.create}" modal="true"
 			appendTo="@(body)">
 
 			<h:form id="frmFunNovo">
@@ -77,7 +77,7 @@
 						value="#{MBFuncao.funcao.descricao}" required="true"
 						requiredMessage="O Campo Descrição é Obrigatório" onkeyup="maiuscula(this);" />
 						
-					<p:outputLabel for="txtTipoFunNovo" value="Tipo " style="font-weight:bold"/>
+					<p:outputLabel for="txtTipoFunNovo" value="#{bundle.type}" style="font-weight:bold"/>
 					<p:inputText id="txtTipoFunNovo" size="3" maxlength="2"
 						value="#{MBFuncao.funcao.tipo}" required="true"
 						requiredMessage="O Campo Tipo é Obrigatório" />
@@ -99,7 +99,7 @@
 		</p:dialog>
 
 		<p:dialog widgetVar="dlgFunExcluir" closable="false" draggable="false"
-			resizable="flase" header="Funcao - Exluir" modal="true"
+			resizable="flase" header="#{bundle.delete}" modal="true"
 			appendTo="@(body)">
 
 			<h:form id="frmFunExcluir">
@@ -111,7 +111,7 @@
 					<h:outputLabel value="Descrição  " />
 					<h:outputText value="#{MBFuncao.funcao.descricao}" />
 					
-					<h:outputLabel value="Tipo  " />
+					<h:outputLabel value="#{bundle.type}" />
 					<h:outputText value="#{MBFuncao.funcao.tipo}" />
 					
 				</h:panelGrid>
@@ -141,7 +141,7 @@
 						value="#{MBFuncao.funcao.descricao}" size="30" maxlength="50"
 						required="true" requiredMessage="Campo Descrição é Obrigatorio" onkeyup="maiuscula(this);" />
 
-					<p:outputLabel for="txtTipoFunEditar" value="Descrição" style="font-weight:bold" />
+					<p:outputLabel for="txtTipoFunEditar" value="#{bundle.type}" style="font-weight:bold" />
 					<p:inputText id="txtTipoFunEditar"
 						value="#{MBFuncao.funcao.tipo}" size="30" maxlength="50"
 						required="true" requiredMessage="Campo Tipo é Obrigatorio" />

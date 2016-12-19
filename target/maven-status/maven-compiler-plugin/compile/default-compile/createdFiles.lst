@@ -22,6 +22,7 @@ br/com/adprofissionais/domain/Condominio.class
 br/com/adprofissionais/dao/CondominioDAO.class
 br/com/adprofissionais/dao/FuncaoDAO.class
 br/com/adprofissionais/bean/EstadoBean.class
+br/com/adprofissionais/bean/TesteBean.class
 br/com/adprofissionais/dao/UsuarioDAO.class
 br/com/adprofissionais/domain/Contato.class
 br/com/adprofissionais/domain/Estado.class

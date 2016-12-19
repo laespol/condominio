@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 public class Util {
  
       public static HttpSession getSession() {
+    	  System.out.println("HttpSession getSession()");
         return (HttpSession)
           FacesContext.
           getCurrentInstance().
@@ -16,13 +17,14 @@ public class Util {
       }
        
       public static HttpServletRequest getRequest() {
+    	  System.out.println("HttpServletRequest getRequest()");
        return (HttpServletRequest) FacesContext.
           getCurrentInstance().
           getExternalContext().getRequest();
       }
  
-      public static String getUserName()
-      {
+      public static String getUserName()  {
+    	  System.out.println("String getUserName()");
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         return  session.getAttribute("username").toString();
       }
