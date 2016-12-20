@@ -12,6 +12,7 @@ public class Usuario {
 	private Date dataativ;
 	private Date datadesativ;
 	private String status;
+	private String numcpf;
 
 	@Override
 	public String toString() {
@@ -81,6 +82,14 @@ public class Usuario {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getNumcpf() {
+		return numcpf;
+	}
+
+	public void setNumcpf(String numcpf) {
+		this.numcpf = numcpf;
 	}
 	
 

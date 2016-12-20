@@ -18,8 +18,8 @@ public class UsuarioDAO {
 		System.out.println("entrei no dao");
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO usuario ");
-		sql.append("(nome,login,senha,email, dataativ, status) ");
-		sql.append("VALUES (?,?,?,?,?,?) ");
+		sql.append("(nome,login,senha,email, dataativ, status, numcpf) ");
+		sql.append("VALUES (?,?,?,?,?,?,?) ");
 
 		System.out.println(sql);
 		Date date = new Date();
@@ -32,7 +32,7 @@ public class UsuarioDAO {
 		comando.setString(4, u.getEmail());
 		comando.setTimestamp(5, new java.sql.Timestamp(date.getTime()));
 		comando.setString(6, "A");
-
+		comando.setString(7, u.getNumcpf());
 		comando.executeUpdate();
 
 	}
@@ -60,7 +60,7 @@ public class UsuarioDAO {
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE usuario ");
 		sql.append("SET nome = ?, login = ?, senha = ? , ");
-		sql.append(" email = ? ");
+		sql.append(" email = ? , numcpf = ? ");
 		sql.append("WHERE codigo = ? ");
 
 		Connection conexao = ConexaoFactory.conectar();
@@ -70,8 +70,9 @@ public class UsuarioDAO {
 		comando.setString(2, u.getLogin());
 		comando.setString(3, u.getSenha());
 		comando.setString(4, u.getEmail());
+		comando.setString(5, u.getNumcpf());
 
-		comando.setLong(5, u.getCodigo());
+		comando.setLong(6, u.getCodigo());
 
 		comando.executeUpdate();
 
@@ -80,7 +81,7 @@ public class UsuarioDAO {
 	public Usuario buscarPorCodigo(Usuario u) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT u.codigo, u.nome, u.login , u.senha, ");
-		sql.append(" u.email, u.dataativ, u.datadesativ, u.status ");
+		sql.append(" u.email, u.dataativ, u.datadesativ, u.status, u.numcpf ");
 		sql.append("FROM usuario u  ");
 		sql.append("where u.condigo = ? ");
 		sql.append("ORDER BY u.nome ASC ");
@@ -102,6 +103,7 @@ public class UsuarioDAO {
 		usuario.setDataativ(resultado.getDate("u.dataativ"));
 		usuario.setDatadesativ(resultado.getDate("u.datadesativ"));
 		usuario.setStatus(resultado.getString("u.status"));
+		usuario.setNumcpf(resultado.getString("u.numcpf"));
 		return usuario;
 
 	}
@@ -109,7 +111,7 @@ public class UsuarioDAO {
 	public ArrayList<Usuario> listar() throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT u.codigo, u.nome, u.login , u.senha, ");
-		sql.append(" u.email, u.dataativ, u.datadesativ, u.status ");
+		sql.append(" u.email, u.dataativ, u.datadesativ, u.status, u.numcpf ");
 		sql.append("FROM usuario u  ");
 		sql.append("ORDER BY u.nome ASC ");
 
@@ -131,6 +133,7 @@ public class UsuarioDAO {
 			usuario.setDataativ(resultado.getDate("u.dataativ"));
 			usuario.setDatadesativ(resultado.getDate("u.datadesativ"));
 			usuario.setStatus(resultado.getString("u.status"));
+			usuario.setNumcpf(resultado.getString("u.numcpf"));
 			lista.add(usuario);
 
 		}
@@ -141,7 +144,7 @@ public class UsuarioDAO {
 	public ArrayList<Usuario> buscarDescricao(Usuario u) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT u.codigo, u.nome, u.login , u.senha, ");
-		sql.append(" u.email, u.dataativ, u.datadesativ, u.status ");
+		sql.append(" u.email, u.dataativ, u.datadesativ, u.status, u.numcpf ");
 		sql.append("FROM usuario u  ");
 		sql.append("where u.nome LIKE ? ");
 		sql.append("ORDER BY u.nome ASC ");
@@ -165,6 +168,7 @@ public class UsuarioDAO {
 			usuario.setDataativ(resultado.getDate("u.dataativ"));
 			usuario.setDatadesativ(resultado.getDate("u.datadesativ"));
 			usuario.setStatus(resultado.getString("u.status"));
+			usuario.setNumcpf(resultado.getString("u.numcpf"));
 			lista.add(usuario);
 
 		}
@@ -200,6 +204,10 @@ public class UsuarioDAO {
 		sql.append("SELECT u.login , u.senha ");
 		sql.append("FROM usuario u  ");
 		sql.append("where u.login =  ? and u.senha = ? ");
+		
+		System.out.println(sql);
+		System.out.println(user);
+		System.out.println(password);
 
 		Connection conexao = ConexaoFactory.conectar();
 

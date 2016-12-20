@@ -15,3 +15,10 @@ function maiuscula(z){
  }
 //FIM DA FUNÇÃO MASCARA MAIUSCULA
 
+function start() {
+    PF('statusDialog').show();
+}
+ 
+function stop() {
+    PF('statusDialog').hide();
+}

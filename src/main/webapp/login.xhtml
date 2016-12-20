@@ -17,25 +17,25 @@
 	<h:form id="loginForm"> 
 		<p:growl id="msg" showDetail="true" life="3000" />
 
-		<p:panel header="Login" style="width: 360px; ">
+		<p:panel header="#{bundle.loginHello}" style="width: 360px; ">
 
 			<h:panelGrid id="loginPanel" columns="2">
 
-				<p:outputLabel value="Usuario" for="username" />
+				<p:outputLabel value="#{bundle.loginUserName}" for="username" />
 
 				<p:inputText id="username" value="#{MBUsuario.uname}"
 					required="true"
 					requiredMessage="O campo Usuario tem que estar preenchido"
 					onkeyup="maiuscula(this);" />
 
-				<p:outputLabel value="Senha" for="password" />
+				<p:outputLabel value="#{bundle.loginPassword}" for="password" />
 
 				<p:password id="password" value="#{MBUsuario.password}"
 					feedback="false" required="true"
 					requiredMessage="O Campo senha tem que estar preenchido" />
 
 				<p:spacer></p:spacer>
-				<p:commandButton action="#{MBUsuario.loginProject}" value="Login"
+				<p:commandButton action="#{MBUsuario.loginProject}" value="#{bundle.logIn}"
 					update="loginForm" ajax="true" />
 
 			</h:panelGrid>

@@ -18,6 +18,14 @@ import br.com.adprofissionais.dao.UsuarioDAO;
 import br.com.adprofissionais.domain.Usuario;
 import br.com.adprofissionais.util.JSFUtil;
 import br.com.adprofissionais.util.Util;
+import br.com.caelum.stella.boleto.Banco;
+import br.com.caelum.stella.boleto.Beneficiario;
+import br.com.caelum.stella.boleto.Boleto;
+import br.com.caelum.stella.boleto.Datas;
+import br.com.caelum.stella.boleto.Endereco;
+import br.com.caelum.stella.boleto.Pagador;
+import br.com.caelum.stella.boleto.bancos.BancoDoBrasil;
+import br.com.caelum.stella.boleto.transformer.GeradorDeBoleto;
 
 @ManagedBean(name = "MBUsuario")
 @ViewScoped
@@ -28,7 +36,7 @@ public class UsuarioBean {
 	private ArrayList<Usuario> itensFiltrados;
     private String password;
     private String uname;	
-
+    
 	public String getPassword() {
 		return password;
 	}
@@ -173,6 +181,7 @@ public class UsuarioBean {
 	
     public String loginProject() {
 		System.out.println (TimeZone.getDefault());
+		System.out.println(password);
     	String s = password;
 		try {
 	    	MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
@@ -243,5 +252,41 @@ public class UsuarioBean {
             session.invalidate();
             return "/login.xhtml";
     	}
+    }
+    
+    public void gerarPDF() {
+    	System.out.println("gerarpdf");
+    	
+		Datas datas = Datas.novasDatas().comDocumento(1, 5, 2008).comProcessamento(1, 5, 2008).comVencimento(2, 5,
+				2008);
+
+		Endereco enderecoBeneficiario = Endereco.novoEndereco().comLogradouro("Av das Empresas, 555")
+				.comBairro("Bairro Grande").comCep("01234-555").comCidade("São Paulo").comUf("SP");
+
+		// Quem emite o boleto
+		Beneficiario beneficiario = Beneficiario.novoBeneficiario().comNomeBeneficiario("Fulano de Tal")
+				.comAgencia("1824").comDigitoAgencia("4").comCodigoBeneficiario("76000")
+				.comDigitoCodigoBeneficiario("5").comNumeroConvenio("1207113").comCarteira("18")
+				.comEndereco(enderecoBeneficiario).comNossoNumero("9000206");
+
+		Endereco enderecoPagador = Endereco.novoEndereco().comLogradouro("Av dos testes, 111 apto 333")
+				.comBairro("Bairro Teste").comCep("01234-111").comCidade("São Paulo").comUf("SP");
+
+		// Quem paga o boleto
+		Pagador pagador = Pagador.novoPagador().comNome("Fulano da Silva").comDocumento("111.222.333-12")
+				.comEndereco(enderecoPagador);
+
+		Banco banco = new BancoDoBrasil();
+
+		Boleto boleto = Boleto.novoBoleto().comBanco(banco).comDatas(datas).comBeneficiario(beneficiario)
+				.comPagador(pagador).comValorBoleto("200.00").comNumeroDoDocumento("1234")
+				.comInstrucoes("instrucao 1", "instrucao 2", "instrucao 3", "instrucao 4", "instrucao 5")
+				.comLocaisDePagamento("local 1", "local 2");
+
+		GeradorDeBoleto gerador = new GeradorDeBoleto(boleto);
+
+		// Para gerar um boleto em PDF
+		gerador.geraPDF("/home/laespol/boleto/boleto.pdf");
+
     }
 }
